@@ -1,0 +1,101 @@
+{
+	"name": "collection-items",
+	"version": "1.0.0",
+	"description": "",
+	"main": "dist/collection-items/index.js",
+	"module": "dist/collection-items/index.js",
+	"author": "hasiermetal@gmail.com",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/hasier-inan/collection-items.git"
+	},
+	"dependencies": {
+		"react": "^16.4.2",
+		"react-devtools": "^3.3.4",
+		"react-dom": "^16.4.2"
+	},
+	"scripts": {
+		"dist": "cross-env BABEL_ENV=module babel src --out-dir dist --copy-files",
+		"widget": "webpack --config ./webpack.widget.config.js",
+		"start": "webpack-dev-server -d --hot --inline --port 3000 --config ./webpack.preview.config.js",
+		"eslint": "eslint --ext .js,.jsx ./src/ --fix",
+		"sasslint": "sass-lint -v -q -i *module*/**/*.*",
+		"test": "nyc --all --check-coverage --reporter=text mocha ./src/**/*.test.jsx --opts mocha.opts --timeout 5000 --recursive --require ignore-styles ./src/setup.test.jsx --exit",
+		"report": "nyc report --reporter=html --reporter=lcov"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.2.3",
+		"@babel/core": "^7.0.0",
+		"@babel/node": "^7.2.2",
+		"@babel/polyfill": "^7.0.0",
+		"@babel/preset-env": "^7.0.0",
+		"@babel/preset-react": "^7.0.0",
+		"@babel/preset-stage-2": "^7.0.0",
+		"@babel/register": "^7.0.0",
+		"babel-eslint": "^9.0.0",
+		"babel-loader": "^8.0.0",
+		"babel-plugin-istanbul": "^5.0.1",
+		"babel-plugin-transform-class-properties": "^6.24.1",
+		"base64-inline-loader": "^1.1.1",
+		"chai": "^4.1.2",
+		"chai-as-promised": "^7.1.1",
+		"chai-enzyme": "^1.0.0-beta.1",
+		"classnames": "^2.2.5",
+		"cross-env": "^5.2.0",
+		"css-loader": "^1.0.0",
+		"enzyme": "^3.6.0",
+		"enzyme-adapter-react-16": "^1.4.0",
+		"eslint": "^5.4.0",
+		"eslint-config-airbnb": "^17.1.0",
+		"eslint-plugin-import": "^2.14.0",
+		"eslint-plugin-jsx-a11y": "^6.1.1",
+		"eslint-plugin-mocha": "^5.2.0",
+		"eslint-plugin-react": "^7.11.1",
+		"ignore-styles": "^5.0.1",
+		"isomorphic-fetch": "^2.2.1",
+		"jsdom": "^12.0.0",
+		"mini-css-extract-plugin": "^0.4.2",
+		"mocha": "^5.2.0",
+		"mocha-jsdom": "1.1.0",
+		"node-sass": "^4.9.3",
+		"nyc": "^13.0.1",
+		"postcss-loader": "^3.0.0",
+		"prop-types": "^15.6.2",
+		"sass-lint": "^1.12.1",
+		"sass-loader": "^7.1.0",
+		"style-loader": "^0.23.0",
+		"svg-inline-loader": "^0.8.0",
+		"webpack": "^4.17.1",
+		"webpack-cli": "^3.1.0",
+		"webpack-dev-server": "^3.1.7"
+	},
+	"nyc": {
+		"require": [
+			"@babel/register"
+		],
+		"lines": 20,
+		"statements": 20,
+		"functions": 20,
+		"branches": 20,
+		"reporter": [
+			"lcov",
+			"html"
+		],
+		"include": [
+			"src/**"
+		],
+		"exclude": [
+			"**/node_modules/**",
+			"src/**/*.test.jsx",
+			"src/**/*.test.js",
+			"src/constants/**",
+			"src/index.js"
+		],
+		"extension": [
+			".jsx",
+			".js"
+		],
+		"temp-dir": "./target/istanbul-report-temp",
+		"report-dir": "./target/istanbul-report"
+	}
+}
