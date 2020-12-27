@@ -1,7 +1,7 @@
 {
 	"name": "collection-items",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Component that displays a list of items based on their properties",
 	"main": "dist/collection-items/index.js",
 	"module": "dist/collection-items/index.js",
 	"author": "hasiermetal@gmail.com",
@@ -10,13 +10,15 @@
 		"url": "https://github.com/hasier-inan/collection-items.git"
 	},
 	"dependencies": {
+		"bootstrap": "^4.5.3",
+		"lodash": "^4.17.20",
 		"react": "^16.4.2",
 		"react-devtools": "^3.3.4",
 		"react-dom": "^16.4.2"
 	},
 	"scripts": {
+		"build": "webpack",
 		"dist": "cross-env BABEL_ENV=module babel src --out-dir dist --copy-files",
-		"widget": "webpack --config ./webpack.widget.config.js",
 		"start": "webpack-dev-server -d --hot --inline --port 3000 --config ./webpack.preview.config.js",
 		"eslint": "eslint --ext .js,.jsx ./src/ --fix",
 		"sasslint": "sass-lint -v -q -i *module*/**/*.*",

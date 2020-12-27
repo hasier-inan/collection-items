@@ -1,3 +1,13 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto+Slab|Open+Sans:400italic,700italic,400,700);
+@import "./bootstrap";
+
+$roboto-slab: 'Roboto Slab', serif;
+$primary-color: #000000;
+$default-size: 12px;
+
 .collection-items {
+  font-family: $roboto-slab;
+  color: $primary-color;
+  font-size: $default-size;
 
 }
