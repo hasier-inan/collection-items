@@ -7,7 +7,8 @@
   "files": {
     "include": "**/*.s+(a|c)ss",
     "ignore": [
-      "node_modules/**/*.*"
+      "node_modules/**/*.*",
+      "src/collection-items/menu/react-burguer-menu.scss"
     ]
   },
   "rules": {

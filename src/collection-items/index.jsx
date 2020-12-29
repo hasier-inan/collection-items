@@ -1,52 +1,98 @@
 import "./index.scss";
 
-import Item from "./item";
+import ItemContainer from "./item-container";
+import Menu from "./menu";
 import React from "react";
 import PropTypes from "prop-types";
-import _merge from "lodash/merge";
+import Item from "./item";
+import _flatten from "lodash/flatten";
+import _values from "lodash/values";
 
-const CollectionItems = (props) => {
+class CollectionItems extends React.Component {
 
-    const renderCollectionItems = () => {
+    constructor(props) {
+        super(props);
+
         const {
-            items,
-            defaultWidth,
-            defaultHeight,
-        } = props;
+            categories
+        } = this.props;
 
-        return items.map((item, index) => {
-                const itemProps = _merge({
-                    width: defaultWidth,
-                    height: defaultHeight,
-                }, item, {
-                    className: 'collection-items__item mt-1 m-1 d-inline-block',
-                });
+        this.state = {
+            categories: this.buildCategories(categories),
+        };
+    }
 
-                return <Item key={index}
-                             {...itemProps}
-                />
+    buildCategories(categories) {
+        return categories.map((category) => {
+            return {
+                id: category.id || category.title,
+                title: category.title,
+                onSelect: () => {
+                    this.setState({
+                        selectedCategory: category.id,
+                        title: category.title,
+                    });
+                }
             }
-        );
-    };
+        });
+    }
 
-    return (<div className={'collection-items'}>
-        {renderCollectionItems()}
-    </div>);
-};
+    renderMenu() {
+        const {
+            categories
+        } = this.state;
+
+        if (categories.length > 0) {
+            return <Menu items={categories}
+                         isOpen={false}
+            />;
+        }
+    }
+
+    renderItems() {
+        const {
+                selectedCategory,
+            } = this.state,
+            {
+                items,
+            } = this.props;
+
+        return selectedCategory ? items[selectedCategory] : _flatten(_values(items));
+    }
+
+    render() {
+        const {
+            title,
+        } = this.state;
+
+        return (
+            <div className={'collection-items'}>
+                {this.renderMenu()}
+                <div className={'collection-items__header'}></div>
+                <ItemContainer
+                    title={title}
+                    items={this.renderItems()}
+                />
+            </div>);
+    }
+}
 
 CollectionItems.propTypes = {
-    "items": PropTypes.arrayOf(
-        PropTypes.shape(Item.propTypes)
+    categories: PropTypes.arrayOf(
+        PropTypes.shape({
+            'title': PropTypes.string.isRequired,
+            'id': PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+        })
     ),
-    "defaultWidth": PropTypes.number,
-    "defaultHeight": PropTypes.number,
+    items: PropTypes.objectOf(
+        PropTypes.arrayOf(
+            PropTypes.shape(Item.propTypes)
+        )).isRequired,
 };
 
 /* istanbul ignore next */
 CollectionItems.defaultProps = {
-    "items": [],
-    "defaultWidth": 150,
-    "defaultHeight": 150,
+    categories: [],
 };
 
 export default CollectionItems;
