@@ -14,7 +14,7 @@ $menu-background-color: rgba(120, 120, 120, 1);
         outline: none;
     }
 
-    &:hover {
+    &:hover, &.selected {
         color: $menu-secondary-color;
         text-decoration: none;
     }

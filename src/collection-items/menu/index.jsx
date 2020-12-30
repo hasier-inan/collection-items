@@ -16,7 +16,7 @@ class Menu extends React.Component {
             return <a
                 key={index}
                 onClick={() => value.onSelect()}
-                className={'menu-item ml-4 mt-2'}>{value.title}</a>
+                className={`menu-item ml-4 mt-2 ${value.selected ? 'selected' : ''}`}>{value.title}</a>
         });
     }
 
@@ -30,7 +30,12 @@ class Menu extends React.Component {
 }
 
 Menu.propTypes = {
-    items: PropTypes.array.isRequired,
+    items: PropTypes.arrayOf(PropTypes.shape({
+        id:  PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+        selected: PropTypes.bool,
+        title: PropTypes.string.isRequired,
+        onSelect: PropTypes.func,
+    })),
     isOpen: PropTypes.bool.isRequired
 };
 

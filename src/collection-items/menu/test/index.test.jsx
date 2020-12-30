@@ -55,5 +55,25 @@ describe("Menu", () => {
             assert(spy.calledOnce, "Expected callback to be triggered");
         });
 
+        it("item is not highlighted when not selected", () => {
+            const
+                items = [{
+                    'title': 'one',
+                }],
+                component = mount(<Menu items={items} isOpen={true} />);
+            assert.isFalse(component.find(".menu-item.selected").exists(),
+                "Expected selected classname not to be included");
+        });
+
+        it("item is highlighted when selected", () => {
+            const
+                items = [{
+                    'title': 'one',
+                    'selected': true,
+                }],
+                component = mount(<Menu items={items} isOpen={true} />);
+            assert.exists(component.find(".menu-item.selected"), "Expected selected classname to be included");
+        });
+
     });
 });

@@ -1,5 +1,7 @@
 import "./index.scss";
 
+import {faHome, faAngleRight} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import ItemContainer from "./item-container";
 import Menu from "./menu";
 import React from "react";
@@ -22,19 +24,54 @@ class CollectionItems extends React.Component {
         };
     }
 
-    buildCategories(categories) {
+    buildCategories(categories, selectedId) {
         return categories.map((category) => {
+            const categoryId = category.id || category.title;
             return {
-                id: category.id || category.title,
+                id: categoryId,
+                selected: selectedId && selectedId === categoryId,
                 title: category.title,
                 onSelect: () => {
                     this.setState({
-                        selectedCategory: category.id,
+                        selectedCategory: categoryId,
                         title: category.title,
+                        categories: this.buildCategories(categories, categoryId),
                     });
                 }
             }
         });
+    }
+
+    removeCategory() {
+        const {
+            categories
+        } = this.props;
+
+        this.setState({
+            selectedCategory: undefined,
+            title: undefined,
+            categories: this.buildCategories(categories),
+        });
+    }
+
+    renderBreadcrumb() {
+        const {
+            selectedCategory,
+            title,
+        } = this.state;
+
+        if (selectedCategory) {
+            return (<div className={'collection-items__breadcrumb'}>
+                <FontAwesomeIcon icon={faHome} onClick={this.removeCategory.bind(this)}
+                                 className={'breadcrumb-item breadcrumb-item--home'}/>
+                <FontAwesomeIcon icon={faAngleRight} className={'breadcrumb-item'}/>
+                <span className={'breadcrumb-item breadcrumb-item--category'}>{title}</span>
+            </div>);
+        }
+    }
+
+    renderHeader() {
+        return (<div className={'collection-items__header'} />)
     }
 
     renderMenu() {
@@ -61,16 +98,12 @@ class CollectionItems extends React.Component {
     }
 
     render() {
-        const {
-            title,
-        } = this.state;
-
         return (
             <div className={'collection-items'}>
                 {this.renderMenu()}
-                <div className={'collection-items__header'}></div>
+                {this.renderHeader()}
+                {this.renderBreadcrumb()}
                 <ItemContainer
-                    title={title}
                     items={this.renderItems()}
                 />
             </div>);

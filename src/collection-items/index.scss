@@ -6,16 +6,43 @@ $primary-color: #000000;
 $default-size: 12px;
 $header-height: 50px;
 $header-background-color: rgb(26, 26, 26);
+$home-color: #CDB831;
+$home-color-secondary: #CD3840;
 
 .collection-items {
-  font-family: 'Raleway', Arial, sans-serif;
-  color: $primary-color;
-  font-size: $default-size;
+    font-family: 'Raleway', Arial, sans-serif;
+    color: $primary-color;
+    font-size: $default-size;
 
-  &__header {
-    width: 100%;
-    height: $header-height;
-    background-color: $header-background-color;
-  }
+    &__header {
+        width: 100%;
+        height: $header-height;
+        background-color: $header-background-color;
+    }
+
+    &__breadcrumb {
+        font-size: 1.5em;
+        text-align: center;
+        margin: 1em 0;
+
+        .breadcrumb-item {
+            cursor: default;
+            margin: 0 .25em;
+
+            &--home {
+                color: $home-color;
+                cursor: pointer;
+
+                &:hover {
+                    color: $home-color-secondary;
+                }
+            }
+
+            &--category {
+                font-weight: bold;
+            }
+
+        }
+    }
 
 }

@@ -64,6 +64,21 @@ describe("CollectionItems", () => {
                 "Expected id to be the title value");
         });
 
+        it("Menu item does not contain selected property by default", () => {
+            const component = mount(<CollectionItems categories={categories} items={items}/>);
+
+            assert.isUndefined(component.find(Menu).props().items[0].selected,
+                "Expected no menu item to be selected");
+        });
+
+        it("Menu item contains selected property when selected", () => {
+            const component = mount(<CollectionItems categories={categories} items={items}/>);
+
+            component.find('.menu-item').at(0).simulate('click');
+            assert.equal(component.find(Menu).props().items[0].selected, true,
+                "Expected menu item to be selected");
+        });
+
         it("Having no category selected leaves all flatten items", () => {
             const component = mount(<CollectionItems categories={categories} items={items}/>);
 
@@ -77,6 +92,30 @@ describe("CollectionItems", () => {
             component.find('.menu-item').at(0).simulate('click');
             assert.deepEqual(component.find(ItemContainer).props().items, items[1],
                 "Expected items to be updated according to selected category");
+        });
+
+        it("Category selection displays breadcrumb", () => {
+            const component = mount(<CollectionItems categories={categories} items={items}/>);
+
+            component.find('.menu-item').at(0).simulate('click');
+            assert.equal(component.find('.breadcrumb-item.breadcrumb-item--category').text(), categories[0].title,
+                "Expected breadcrumb to be set with selected category");
+        });
+
+        it("Loads all items when home link is followed in the breadcrumb", () => {
+            const component = mount(<CollectionItems categories={categories} items={items}/>);
+
+            component.find('.menu-item').at(0).simulate('click');
+            assert.exists(component.find(".collection-items__breadcrumb"), "Expected breadcrumb to be displayed");
+            component.find('.breadcrumb-item--home').at(0).simulate('click');
+            assert.isFalse(component.find('.collection-items__breadcrumb').exists(), "Expected no breadcrumb");
+            assert.deepEqual(component.find(ItemContainer).props().items, _flatten(_values(items)),
+                "Expected items to be updated according to selected category");
+        });
+
+        it("No breadcrumb is included when category is not selected", () => {
+            const component = mount(<CollectionItems categories={categories} items={items}/>);
+            assert.isFalse(component.find('.collection-items__breadcrumb').exists(), "Expected no breadcrumb");
         });
     });
 });
