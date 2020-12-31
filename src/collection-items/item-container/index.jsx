@@ -20,6 +20,7 @@ const ItemContainer = (props) => {
             items,
             defaultWidth,
             defaultHeight,
+            onItemClick,
         } = props;
 
         return items.map((item, index) => {
@@ -32,6 +33,9 @@ const ItemContainer = (props) => {
 
                 return <Item key={index}
                              {...itemProps}
+                             onClick={() => {
+                                 onItemClick(item);
+                             }}
                 />
             }
         );
@@ -50,6 +54,7 @@ ItemContainer.propTypes = {
     "title": PropTypes.string,
     "defaultWidth": PropTypes.number,
     "defaultHeight": PropTypes.number,
+    "onItemClick": PropTypes.func,
 };
 
 /* istanbul ignore next */
@@ -58,6 +63,8 @@ ItemContainer.defaultProps = {
     "title": "",
     "defaultWidth": 150,
     "defaultHeight": 150,
+    "onItemClick": () => {
+    },
 };
 
 export default ItemContainer;

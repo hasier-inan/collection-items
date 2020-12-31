@@ -49,4 +49,5 @@ ReactDOM.render(React.createElement(() =>
     <CollectionItems
         items={items}
         categories={categories}
+        onItemClick={(item)=>{console.log(item)}}
     />), window.collectionitems);

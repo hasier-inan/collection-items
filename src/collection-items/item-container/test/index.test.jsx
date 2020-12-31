@@ -5,6 +5,7 @@ import React from "react";
 import Item from "../../item";
 import {assert} from "chai";
 import _merge from "lodash/merge";
+import sinon from "sinon";
 
 configure({"adapter": new Adapter()});
 
@@ -73,6 +74,17 @@ describe("ItemContainer", () => {
                 "Expected width to be override");
             assert.equal(anItem.find(Item).at(1).props().height, customHeight,
                 "Expected height to be override");
+        });
+
+
+
+        it("triggers item click callback with item", () => {
+            const spy = sinon.spy(),
+                anItem = mount(<ItemContainer items={items} onItemClick={spy}/>);
+
+            anItem.find(".item__image").at(0).simulate("click");
+            assert(spy.calledOnce, "Expected callback to be triggered with values.");
+            assert.deepEqual(spy.args[0][0], items[0], "Expected item to be included as argument");
         });
 
     });

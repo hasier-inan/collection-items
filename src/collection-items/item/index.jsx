@@ -19,6 +19,7 @@ const Item = (props) => {
                 width,
                 height,
                 image,
+                onClick,
             } = props,
             style = {
                 width: `${width}px`,
@@ -26,9 +27,9 @@ const Item = (props) => {
             };
 
         if (image) {
-            return (<img className={'item__image'} src={image} style={style}/>);
+            return (<img className={'item__image'} src={image} style={style} onClick={onClick}/>);
         }
-        return (<div className={'item__image item--no-image'} style={style}/>);
+        return (<div className={'item__image item--no-image'} style={style} onClick={onClick}/>);
     };
 
     const {
@@ -53,6 +54,7 @@ Item.propTypes = {
     "subtitle": PropTypes.string,
     "width": PropTypes.number,
     "height": PropTypes.number,
+    "onClick": PropTypes.func,
 };
 
 /* istanbul ignore next */
@@ -62,6 +64,8 @@ Item.defaultProps = {
     "subtitle": "",
     "width": 150,
     "height": 150,
+    "onClick": () => {
+    },
 };
 
 export default Item;

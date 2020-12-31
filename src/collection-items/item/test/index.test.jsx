@@ -3,6 +3,7 @@ import Adapter from "enzyme-adapter-react-16";
 import Item from "../";
 import React from "react";
 import {assert} from "chai";
+import sinon from "sinon";
 
 configure({"adapter": new Adapter()});
 
@@ -77,6 +78,29 @@ describe("Item", () => {
             const anItem = mount(<Item {...imageOptions} />);
             assert.deepEqual(anItem.find(".item").prop("style"), {width: '150px'},
                 "Expected defaultitem width to be set");
+        });
+
+    });
+
+    describe("Item interaction", () => {
+
+        it("triggers item click when image exists", () => {
+            const
+                spy = sinon.spy(),
+                anItem = mount(<Item {...imageOptions} image={'something'} onClick={spy}/>);
+
+            anItem.find(".item__image").simulate("click");
+
+            assert(spy.calledOnce, "Expected callback to be triggered with values.");
+        });
+
+        it("triggers item click when image does not exist", () => {
+            const spy = sinon.spy(),
+                anItem = mount(<Item {...imageOptions} onClick={spy}/>);
+
+            anItem.find(".item--no-image").simulate("click");
+
+            assert(spy.calledOnce, "Expected callback to be triggered with values.");
         });
 
     });

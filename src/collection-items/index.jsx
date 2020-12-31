@@ -138,6 +138,10 @@ class CollectionItems extends React.Component {
     }
 
     render() {
+        const {
+            onItemClick,
+        } = this.props;
+
         return (
             <div className={'collection-items'}>
                 {this.renderMenu()}
@@ -145,6 +149,7 @@ class CollectionItems extends React.Component {
                 {this.renderBreadcrumb()}
                 <ItemContainer
                     items={this.retrieveItems()}
+                    onItemClick={onItemClick}
                 />
             </div>);
     }
@@ -161,11 +166,14 @@ CollectionItems.propTypes = {
         PropTypes.arrayOf(
             PropTypes.shape(Item.propTypes)
         )).isRequired,
+    onItemClick: PropTypes.func,
 };
 
 /* istanbul ignore next */
 CollectionItems.defaultProps = {
     categories: [],
+    onItemClick: () => {
+    },
 };
 
 export default CollectionItems;
