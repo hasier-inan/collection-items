@@ -2,11 +2,13 @@ import "./index.scss";
 
 import {faHome, faAngleRight} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import SearchField from "react-search-field";
 import ItemContainer from "./item-container";
 import Menu from "./menu";
 import React from "react";
 import PropTypes from "prop-types";
 import Item from "./item";
+import _filter from "lodash/filter";
 import _flatten from "lodash/flatten";
 import _values from "lodash/values";
 
@@ -16,7 +18,7 @@ class CollectionItems extends React.Component {
         super(props);
 
         const {
-            categories
+            categories,
         } = this.props;
 
         this.state = {
@@ -34,12 +36,48 @@ class CollectionItems extends React.Component {
                 onSelect: () => {
                     this.setState({
                         selectedCategory: categoryId,
+                        searchText: undefined,
                         title: category.title,
                         categories: this.buildCategories(categories, categoryId),
                     });
                 }
             }
         });
+    }
+
+    retrieveFilteredItems() {
+        const {
+                searchText,
+            } = this.state,
+            {
+                items,
+            } = this.props;
+
+        let flattenValues = _flatten(_values(items));
+        if (searchText) {
+            return _filter(flattenValues, (item) => {
+                return JSON.stringify(item).toUpperCase().includes(searchText.toUpperCase());
+            });
+        }
+        return flattenValues
+    }
+
+    retrieveItems() {
+        const {
+                selectedCategory,
+            } = this.state,
+            {
+                items,
+            } = this.props;
+
+        return selectedCategory ? items[selectedCategory] : this.retrieveFilteredItems();
+    }
+
+    searchItem(text) {
+        this.setState({
+            selectedCategory: undefined,
+            searchText: text,
+        })
     }
 
     removeCategory() {
@@ -50,6 +88,7 @@ class CollectionItems extends React.Component {
         this.setState({
             selectedCategory: undefined,
             title: undefined,
+            searchText: undefined,
             categories: this.buildCategories(categories),
         });
     }
@@ -71,7 +110,19 @@ class CollectionItems extends React.Component {
     }
 
     renderHeader() {
-        return (<div className={'collection-items__header'} />)
+        const {
+            searchText,
+        } = this.state;
+
+        return (<div className={'collection-items__header'}>
+            <SearchField
+                placeholder={"Search..."}
+                searchText={searchText}
+                classNames={"collection-items__search-field"}
+                onSearchClick={this.searchItem.bind(this)}
+                onEnter={this.searchItem.bind(this)}
+            />
+        </div>)
     }
 
     renderMenu() {
@@ -86,17 +137,6 @@ class CollectionItems extends React.Component {
         }
     }
 
-    renderItems() {
-        const {
-                selectedCategory,
-            } = this.state,
-            {
-                items,
-            } = this.props;
-
-        return selectedCategory ? items[selectedCategory] : _flatten(_values(items));
-    }
-
     render() {
         return (
             <div className={'collection-items'}>
@@ -104,7 +144,7 @@ class CollectionItems extends React.Component {
                 {this.renderHeader()}
                 {this.renderBreadcrumb()}
                 <ItemContainer
-                    items={this.renderItems()}
+                    items={this.retrieveItems()}
                 />
             </div>);
     }

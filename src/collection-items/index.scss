@@ -3,6 +3,8 @@
 
 $roboto-slab: 'Roboto Slab', serif;
 $primary-color: #000000;
+$secondary-color: rgb(120, 120, 120);
+$secondary-color-alpha: rgba(120, 120, 120, .5);
 $default-size: 12px;
 $header-height: 50px;
 $header-background-color: rgb(26, 26, 26);
@@ -18,6 +20,26 @@ $home-color-secondary: #CD3840;
         width: 100%;
         height: $header-height;
         background-color: $header-background-color;
+    }
+
+    &__search-field {
+        position: absolute;
+        right: 6px;
+        top: 6px;
+        border: 1px solid $secondary-color-alpha !important;
+        border-radius: 6px;
+
+        button {
+            background: $secondary-color-alpha !important;
+            border-left: 1px solid $secondary-color-alpha !important;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        input {
+            background: transparent;
+            color: $home-color !important;
+        }
     }
 
     &__breadcrumb {
