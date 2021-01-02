@@ -8,6 +8,7 @@ import ItemContainer from "../item-container"
 import SearchField from "react-search-field";
 import _flatten from "lodash/flatten";
 import _values from "lodash/values";
+import sinon from "sinon";
 
 configure({"adapter": new Adapter()});
 
@@ -101,6 +102,16 @@ describe("CollectionItems", () => {
             component.find('.menu-item').at(0).simulate('click');
             assert.equal(component.find('.breadcrumb-item.breadcrumb-item--category').text(), categories[0].title,
                 "Expected breadcrumb to be set with selected category");
+        });
+
+        it("Category selection triggers callback", () => {
+            const spy = sinon.spy(),
+                component = mount(<CollectionItems categories={categories} items={items}
+                                                   onCategorySelect={spy}/>);
+
+            component.find('.menu-item').at(0).simulate('click');
+            assert(spy.calledOnce, "Expected callback to be triggered with category id.");
+            assert.deepEqual(spy.args[0][0], 1, "Expected category id be included as argument");
         });
 
     });

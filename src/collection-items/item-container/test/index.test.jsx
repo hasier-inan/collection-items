@@ -76,8 +76,6 @@ describe("ItemContainer", () => {
                 "Expected height to be override");
         });
 
-
-
         it("triggers item click callback with item", () => {
             const spy = sinon.spy(),
                 anItem = mount(<ItemContainer items={items} onItemClick={spy}/>);

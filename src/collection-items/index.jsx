@@ -27,6 +27,10 @@ class CollectionItems extends React.Component {
     }
 
     buildCategories(categories, selectedId) {
+        const {
+            onCategorySelect,
+        } = this.props;
+
         return categories.map((category) => {
             const categoryId = category.id || category.title;
             return {
@@ -34,6 +38,8 @@ class CollectionItems extends React.Component {
                 selected: selectedId && selectedId === categoryId,
                 title: category.title,
                 onSelect: () => {
+                    onCategorySelect && onCategorySelect(categoryId);
+                    
                     this.setState({
                         selectedCategory: categoryId,
                         searchText: undefined,
@@ -167,12 +173,15 @@ CollectionItems.propTypes = {
             PropTypes.shape(Item.propTypes)
         )).isRequired,
     onItemClick: PropTypes.func,
+    onCategorySelect: PropTypes.func,
 };
 
 /* istanbul ignore next */
 CollectionItems.defaultProps = {
     categories: [],
     onItemClick: () => {
+    },
+    onCategorySelect: () => {
     },
 };
 
