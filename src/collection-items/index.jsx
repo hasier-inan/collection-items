@@ -39,7 +39,7 @@ class CollectionItems extends React.Component {
                 title: category.title,
                 onSelect: () => {
                     onCategorySelect && onCategorySelect(categoryId);
-                    
+
                     this.setState({
                         selectedCategory: categoryId,
                         searchText: undefined,
@@ -57,6 +57,7 @@ class CollectionItems extends React.Component {
             } = this.state,
             {
                 items,
+                displayFullCollection,
             } = this.props;
 
         let flattenValues = _flatten(_values(items));
@@ -64,8 +65,9 @@ class CollectionItems extends React.Component {
             return _filter(flattenValues, (item) => {
                 return JSON.stringify(item).toUpperCase().includes(searchText.toUpperCase());
             });
+        } else if (displayFullCollection) {
+            return flattenValues
         }
-        return flattenValues
     }
 
     retrieveItems() {
@@ -101,11 +103,14 @@ class CollectionItems extends React.Component {
 
     renderBreadcrumb() {
         const {
-            selectedCategory,
-            title,
-        } = this.state;
+                enableBreadcrumb,
+            } = this.props,
+            {
+                selectedCategory,
+                title,
+            } = this.state;
 
-        if (selectedCategory) {
+        if (enableBreadcrumb && selectedCategory) {
             return (<div className={'collection-items__breadcrumb'}>
                 <FontAwesomeIcon icon={faHome} onClick={this.removeCategory.bind(this)}
                                  className={'breadcrumb-item breadcrumb-item--home'}/>
@@ -144,9 +149,6 @@ class CollectionItems extends React.Component {
     }
 
     render() {
-        const {
-            onItemClick,
-        } = this.props;
 
         return (
             <div className={'collection-items'}>
@@ -154,8 +156,8 @@ class CollectionItems extends React.Component {
                 {this.renderHeader()}
                 {this.renderBreadcrumb()}
                 <ItemContainer
+                    {...this.props}
                     items={this.retrieveItems()}
-                    onItemClick={onItemClick}
                 />
             </div>);
     }
@@ -174,6 +176,8 @@ CollectionItems.propTypes = {
         )).isRequired,
     onItemClick: PropTypes.func,
     onCategorySelect: PropTypes.func,
+    enableBreadcrumb: PropTypes.bool,
+    displayFullCollection: PropTypes.bool,
 };
 
 /* istanbul ignore next */
@@ -183,6 +187,8 @@ CollectionItems.defaultProps = {
     },
     onCategorySelect: () => {
     },
+    enableBreadcrumb: true,
+    displayFullCollection: true,
 };
 
 export default CollectionItems;

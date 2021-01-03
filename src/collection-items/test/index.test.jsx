@@ -133,6 +133,11 @@ describe("CollectionItems", () => {
             const component = mount(<CollectionItems categories={categories} items={items}/>);
             assert.isFalse(component.find('.collection-items__breadcrumb').exists(), "Expected no breadcrumb");
         });
+
+        it("No breadcrumb is included when set as false", () => {
+            const component = mount(<CollectionItems enableBreadcrumb={false} categories={categories} items={items}/>);
+            assert.isFalse(component.find('.collection-items__breadcrumb').exists(), "Expected no breadcrumb");
+        });
     });
 
     describe("Search items", () => {
@@ -184,6 +189,17 @@ describe("CollectionItems", () => {
                     "Expected items to be updated according to selected category");
 
             });
+        });
+
+    });
+
+    describe("Full collection", () => {
+
+        it("does not display full collection by default", () => {
+            const component = mount(<CollectionItems displayFullCollection={false} categories={categories}
+                                                     items={items}/>);
+            assert.equal(component.find(ItemContainer).props().items.length, 0,
+                "Expected no items since category has not been selected");
         });
 
     });

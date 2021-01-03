@@ -20,6 +20,7 @@ $home-color-secondary: #CD3840;
         width: 100%;
         height: $header-height;
         background-color: $header-background-color;
+        position: fixed;
     }
 
     &__search-field {

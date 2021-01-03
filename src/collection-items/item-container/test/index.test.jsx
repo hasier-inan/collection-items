@@ -1,6 +1,7 @@
 import {configure, mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import ItemContainer from "../";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import React from "react";
 import Item from "../../item";
 import {assert} from "chai";
@@ -78,9 +79,9 @@ describe("ItemContainer", () => {
 
         it("triggers item click callback with item", () => {
             const spy = sinon.spy(),
-                anItem = mount(<ItemContainer items={items} onItemClick={spy}/>);
+                anItem = mount(<ItemContainer items={items} onItemClick={spy} lazyLoad={false}/>);
 
-            anItem.find(".item__image").at(0).simulate("click");
+            anItem.find(LazyLoadImage).at(0).simulate("click");
             assert(spy.calledOnce, "Expected callback to be triggered with values.");
             assert.deepEqual(spy.args[0][0], items[0], "Expected item to be included as argument");
         });

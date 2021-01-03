@@ -1,3 +1,5 @@
+import "./index.scss";
+
 import Item from "../item";
 import React from "react";
 import PropTypes from "prop-types";
@@ -17,11 +19,12 @@ const ItemContainer = (props) => {
 
     const renderItemContainer = () => {
         const {
-            items,
-            defaultWidth,
-            defaultHeight,
-            onItemClick,
-        } = props;
+                items,
+                defaultWidth,
+                defaultHeight,
+                onItemClick,
+                lazyLoad,
+            } = props;
 
         return items.map((item, index) => {
                 const itemProps = _merge({
@@ -36,6 +39,7 @@ const ItemContainer = (props) => {
                              onClick={() => {
                                  onItemClick(item);
                              }}
+                             lazyLoad={lazyLoad}
                 />
             }
         );
@@ -55,6 +59,7 @@ ItemContainer.propTypes = {
     "defaultWidth": PropTypes.number,
     "defaultHeight": PropTypes.number,
     "onItemClick": PropTypes.func,
+    "lazyLoad": PropTypes.bool,
 };
 
 /* istanbul ignore next */
@@ -65,6 +70,7 @@ ItemContainer.defaultProps = {
     "defaultHeight": 150,
     "onItemClick": () => {
     },
+    "lazyLoad": true,
 };
 
 export default ItemContainer;

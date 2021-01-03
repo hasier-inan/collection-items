@@ -1,6 +1,7 @@
 import {configure, mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import Item from "../";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import React from "react";
 import {assert} from "chai";
 import sinon from "sinon";
@@ -29,8 +30,8 @@ describe("Item", () => {
 
         it("includes the image", () => {
             const anImage = '/somewhere/far/away',
-                anItem = mount(<Item {...imageOptions} image={anImage}/>);
-            assert.equal(anItem.find(".item__image").prop("src"), anImage,
+                anItem = mount(<Item {...imageOptions} image={anImage} lazyLoad={false}/>);
+            assert.equal(anItem.find(LazyLoadImage).prop("src"), anImage,
                 "Expected image url to be set");
         });
 
@@ -62,8 +63,9 @@ describe("Item", () => {
         it("includes the image area with specific size", () => {
             const width = 666,
                 height = 888,
-                anItem = mount(<Item {...imageOptions} image={'something'} width={width} height={height}/>);
-            assert.deepEqual(anItem.find(".item__image").prop("style"), {width: `${width}px`, height: `${height}px`},
+                anItem = mount(<Item {...imageOptions} image={'something'} width={width} height={height}
+                                     lazyLoad={false}/>);
+            assert.deepEqual(anItem.find(LazyLoadImage).prop("style"), {width: `${width}px`, height: `${height}px`},
                 "Expected item width to be set");
         });
 
@@ -87,9 +89,9 @@ describe("Item", () => {
         it("triggers item click when image exists", () => {
             const
                 spy = sinon.spy(),
-                anItem = mount(<Item {...imageOptions} image={'something'} onClick={spy}/>);
+                anItem = mount(<Item {...imageOptions} lazyLoad={false} image={'something'} onClick={spy}/>);
 
-            anItem.find(".item__image").simulate("click");
+            anItem.find(LazyLoadImage).simulate("click");
 
             assert(spy.calledOnce, "Expected callback to be triggered with values.");
         });

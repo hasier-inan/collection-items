@@ -1,6 +1,9 @@
 import "./index.scss";
+import 'react-lazy-load-image-component/src/effects/opacity.css';
+
 import PropTypes from "prop-types";
 import React from "react";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const Item = (props) => {
 
@@ -20,6 +23,7 @@ const Item = (props) => {
                 height,
                 image,
                 onClick,
+                lazyLoad,
             } = props,
             style = {
                 width: `${width}px`,
@@ -27,7 +31,14 @@ const Item = (props) => {
             };
 
         if (image) {
-            return (<img className={'item__image'} src={image} style={style} onClick={onClick}/>);
+            return (<LazyLoadImage
+                className={'item__image'}
+                onClick={onClick}
+                src={image}
+                style={style}
+                effect="opacity"
+                visibleByDefault={!lazyLoad}
+            />);
         }
         return (<div className={'item__image item--no-image'} style={style} onClick={onClick}/>);
     };
@@ -54,6 +65,7 @@ Item.propTypes = {
     "subtitle": PropTypes.string,
     "width": PropTypes.number,
     "height": PropTypes.number,
+    "lazyLoad": PropTypes.bool,
     "onClick": PropTypes.func,
 };
 
@@ -64,6 +76,7 @@ Item.defaultProps = {
     "subtitle": "",
     "width": 150,
     "height": 150,
+    "lazyLoad": true,
     "onClick": () => {
     },
 };
