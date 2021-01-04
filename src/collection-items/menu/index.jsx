@@ -7,6 +7,16 @@ const React = require('react');
 
 class Menu extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        const {
+            isOpen
+        } = props;
+
+        this.state = {menuOpen: isOpen}
+    }
+
     getItems() {
         const {
             items
@@ -15,14 +25,25 @@ class Menu extends React.Component {
         return items.map((value, index) => {
             return <a
                 key={index}
-                onClick={() => value.onSelect()}
+                onClick={() => {
+                    value.onSelect();
+                    this.setState({menuOpen: false});
+                }}
                 className={`menu-item ml-4 mt-2 ${value.selected ? 'selected' : ''}`}>{value.title}</a>
         });
     }
 
+    handleStateChange(state) {
+        this.setState({menuOpen: state.isOpen})
+    }
+
     render() {
+        const {
+            menuOpen
+        } = this.state;
+
         return (
-            <BurguerMenu isOpen={this.props.isOpen}>
+            <BurguerMenu onStateChange={this.handleStateChange.bind(this)} isOpen={menuOpen}>
                 {this.getItems()}
             </BurguerMenu>
         )
@@ -31,7 +52,7 @@ class Menu extends React.Component {
 
 Menu.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape({
-        id:  PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+        id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
         selected: PropTypes.bool,
         title: PropTypes.string.isRequired,
         onSelect: PropTypes.func,

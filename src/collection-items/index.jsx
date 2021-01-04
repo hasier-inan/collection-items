@@ -23,6 +23,7 @@ class CollectionItems extends React.Component {
 
         this.state = {
             categories: this.buildCategories(categories),
+            isMenuOpen: false,
         };
     }
 
@@ -42,6 +43,7 @@ class CollectionItems extends React.Component {
 
                     this.setState({
                         selectedCategory: categoryId,
+                        isMenuOpen: false,
                         searchText: undefined,
                         title: category.title,
                         categories: this.buildCategories(categories, categoryId),
@@ -138,12 +140,13 @@ class CollectionItems extends React.Component {
 
     renderMenu() {
         const {
-            categories
+            categories                     ,
+            isMenuOpen,
         } = this.state;
 
         if (categories.length > 0) {
             return <Menu items={categories}
-                         isOpen={false}
+                         isOpen={isMenuOpen}
             />;
         }
     }
@@ -154,11 +157,13 @@ class CollectionItems extends React.Component {
             <div className={'collection-items'}>
                 {this.renderMenu()}
                 {this.renderHeader()}
-                {this.renderBreadcrumb()}
-                <ItemContainer
-                    {...this.props}
-                    items={this.retrieveItems()}
-                />
+                <div className={'collection-items__content'}>
+                    {this.renderBreadcrumb()}
+                    <ItemContainer
+                        {...this.props}
+                        items={this.retrieveItems()}
+                    />
+                </div>
             </div>);
     }
 }

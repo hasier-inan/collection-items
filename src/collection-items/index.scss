@@ -11,6 +11,8 @@ $header-background-color: rgb(26, 26, 26);
 $home-color: #CDB831;
 $home-color-secondary: #CD3840;
 
+$width-md: 768px;
+
 .collection-items {
     font-family: 'Raleway', Arial, sans-serif;
     color: $primary-color;
@@ -21,6 +23,7 @@ $home-color-secondary: #CD3840;
         height: $header-height;
         background-color: $header-background-color;
         position: fixed;
+        top: 0;
     }
 
     &__search-field {
@@ -40,6 +43,10 @@ $home-color-secondary: #CD3840;
         input {
             background: transparent;
             color: $home-color !important;
+
+            @media (max-width: #{$width-md}) {
+                width: 100px;
+            }
         }
     }
 
@@ -66,6 +73,10 @@ $home-color-secondary: #CD3840;
             }
 
         }
+    }
+
+    &__content{
+        margin-top: $header-height + 5;
     }
 
 }
