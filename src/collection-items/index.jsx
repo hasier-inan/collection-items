@@ -78,9 +78,11 @@ class CollectionItems extends React.Component {
             } = this.state,
             {
                 items,
-            } = this.props;
+                defaultCategory,
+            } = this.props,
+            displayedCategory = selectedCategory || defaultCategory;
 
-        return selectedCategory ? items[selectedCategory] : this.retrieveFilteredItems();
+        return displayedCategory ? items[displayedCategory] : this.retrieveFilteredItems();
     }
 
     searchItem(text) {
@@ -175,6 +177,7 @@ CollectionItems.propTypes = {
             'id': PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         })
     ),
+    defaultCategory: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     items: PropTypes.objectOf(
         PropTypes.arrayOf(
             PropTypes.shape(Item.propTypes)
@@ -188,6 +191,7 @@ CollectionItems.propTypes = {
 /* istanbul ignore next */
 CollectionItems.defaultProps = {
     categories: [],
+    defaultCategory: undefined,
     onItemClick: () => {
     },
     onCategorySelect: () => {

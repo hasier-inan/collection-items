@@ -96,6 +96,14 @@ describe("CollectionItems", () => {
                 "Expected items to be updated according to selected category");
         });
 
+        it("Default category triggers item list update", () => {
+            const component = mount(<CollectionItems categories={categories} items={items}
+                                                     defaultCategory={categories[0].id}/>);
+
+            assert.deepEqual(component.find(ItemContainer).props().items, items[1],
+                "Expected items to be updated according to selected category");
+        });
+
         it("Category selection displays breadcrumb", () => {
             const component = mount(<CollectionItems categories={categories} items={items}/>);
 
