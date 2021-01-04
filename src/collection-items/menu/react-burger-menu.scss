@@ -1,4 +1,4 @@
-$width-md: 768px;
+$width-xs: 480px;
 
 /* Position and sizing of burger button */
 .bm-burger-button {
@@ -46,7 +46,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
     position: fixed;
     height: 100%;
 
-    @media (max-width: #{$width-md}) {
+    @media (max-width: #{$width-xs}) {
         width: 100% !important;
     }
 }

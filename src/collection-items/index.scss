@@ -11,7 +11,7 @@ $header-background-color: rgb(26, 26, 26);
 $home-color: #CDB831;
 $home-color-secondary: #CD3840;
 
-$width-md: 768px;
+$width-xs: 480px;
 
 .collection-items {
     font-family: 'Raleway', Arial, sans-serif;
@@ -44,7 +44,7 @@ $width-md: 768px;
             background: transparent;
             color: $home-color !important;
 
-            @media (max-width: #{$width-md}) {
+            @media (max-width: #{$width-xs}) {
                 width: 100px;
             }
         }
