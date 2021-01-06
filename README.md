@@ -1,5 +1,5 @@
 # Collection items
-Component to list a set of items based on given categories and items. Usage:
+Component to list a set of items based on given categories and items. Basic usage:
 ```js 
  <CollectionItems
         items={items}
@@ -46,3 +46,10 @@ If no categories are specified, no menu will be included, otherwise all categori
 ```
 
 Selecting a category in the menu will list all items that belong to that category. Otherwise all items will be listed.
+
+Other properties:
+- defaultCategory: Category id that will be displayed when full collection is accessed. Undefined by default, it will load the entire collection in this case.
+- onItemClick: Callback function with clicked item.
+- onCategorySelect: Callback function with selected category.
+- enableBreadcrumb: It will include a breadcumb above the collection items with selected category and home button. True by default.  
+- displayFullCollection: It will display the entire collection when no category is selected. True by default.  

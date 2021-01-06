@@ -2,6 +2,8 @@ import "./index.scss";
 
 import {slide as BurguerMenu} from 'react-burger-menu'
 import PropTypes from 'prop-types';
+import {faChevronCircleRight} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const React = require('react');
 
@@ -29,7 +31,10 @@ class Menu extends React.Component {
                     value.onSelect();
                     this.setState({menuOpen: false});
                 }}
-                className={`menu-item ml-4 mt-2 ${value.selected ? 'selected' : ''}`}>{value.title}</a>
+                className={`menu-item ml-4 mt-2 ${value.selected ? 'selected' : ''}`}>
+                <FontAwesomeIcon icon={faChevronCircleRight} className={'menu-item--bullet'} size="xs"/>
+                {value.title}
+            </a>
         });
     }
 
