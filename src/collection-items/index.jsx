@@ -55,32 +55,32 @@ class CollectionItems extends React.Component {
 
     retrieveFilteredItems() {
         const {
-                searchText,
-            } = this.state,
-            {
-                items,
-                displayFullCollection,
-            } = this.props;
+            items,
+            displayFullCollection,
+        } = this.props;
 
-        let flattenValues = _flatten(_values(items));
-        if (searchText) {
-            return _filter(flattenValues, (item) => {
-                return JSON.stringify(item).toUpperCase().includes(searchText.toUpperCase());
-            });
-        } else if (displayFullCollection) {
-            return flattenValues
+        if (displayFullCollection) {
+            return _flatten(_values(items))
         }
     }
 
     retrieveItems() {
         const {
                 selectedCategory,
+                searchText,
             } = this.state,
             {
                 items,
                 defaultCategory,
             } = this.props,
             displayedCategory = selectedCategory || defaultCategory;
+
+        if (searchText) {
+            let flattenValues = _flatten(_values(items));
+            return _filter(flattenValues, (item) => {
+                return JSON.stringify(item).toUpperCase().includes(searchText.toUpperCase());
+            });
+        }
 
         return displayedCategory ? items[displayedCategory] : this.retrieveFilteredItems();
     }
@@ -142,7 +142,7 @@ class CollectionItems extends React.Component {
 
     renderMenu() {
         const {
-            categories                     ,
+            categories,
             isMenuOpen,
         } = this.state;
 
