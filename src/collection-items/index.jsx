@@ -1,6 +1,6 @@
 import "./index.scss";
 
-import {faHome, faAngleRight} from "@fortawesome/free-solid-svg-icons";
+import {faAngleRight, faFilter, faHome} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import SearchField from "react-search-field";
 import ItemContainer from "./item-container";
@@ -11,6 +11,7 @@ import Item from "./item";
 import _filter from "lodash/filter";
 import _flatten from "lodash/flatten";
 import _values from "lodash/values";
+import FilterPanel from "./filter-panel";
 
 class CollectionItems extends React.Component {
 
@@ -24,6 +25,8 @@ class CollectionItems extends React.Component {
         this.state = {
             categories: this.buildCategories(categories),
             isMenuOpen: false,
+            displayFilter: false,
+            filters: {},
         };
     }
 
@@ -75,14 +78,39 @@ class CollectionItems extends React.Component {
             } = this.props,
             displayedCategory = selectedCategory || defaultCategory;
 
+        let updatedItems;
         if (searchText) {
             let flattenValues = _flatten(_values(items));
-            return _filter(flattenValues, (item) => {
+            updatedItems = _filter(flattenValues, (item) => {
                 return JSON.stringify(item).toUpperCase().includes(searchText.toUpperCase());
             });
+        } else {
+            updatedItems = displayedCategory ? items[displayedCategory] : this.retrieveFilteredItems();
+        }
+        return this.filterItems(updatedItems);
+    }
+
+    filterItems(items) {
+        const {
+                filters,
+            } = this.state,
+            filterKeys = Object.keys(filters);
+
+        if (filterKeys.length < 1) {
+            return items;
         }
 
-        return displayedCategory ? items[displayedCategory] : this.retrieveFilteredItems();
+        return _filter(items, (item) => {
+            let allPropertiesMatch = true;
+            filterKeys.forEach((filterKey) => {
+                const allowedValues = filters[filterKey];
+                
+                if (allowedValues.length > 0) {
+                    allPropertiesMatch = allPropertiesMatch && allowedValues.includes(item[filterKey]);
+                }
+            });
+            return allPropertiesMatch;
+        });
     }
 
     searchItem(text) {
@@ -90,6 +118,14 @@ class CollectionItems extends React.Component {
             selectedCategory: undefined,
             searchText: text,
         })
+    }
+
+    handleFilterPanel() {
+        const {
+            displayFilter
+        } = this.state;
+
+        this.setState({displayFilter: !displayFilter});
     }
 
     removeCategory() {
@@ -103,6 +139,28 @@ class CollectionItems extends React.Component {
             searchText: undefined,
             categories: this.buildCategories(categories),
         });
+    }
+
+    updateFilters(filters) {
+        this.setState({filters});
+    }
+
+    renderFilter() {
+        const {
+                displayFilter,
+            } = this.state,
+            {
+                filterableProperties
+            } = this.props;
+
+        if (Object.keys(filterableProperties).length > 0) {
+            return (<div className={`collection-items__filter-area ${displayFilter ? 'filter-area--show' : ''}`}>
+                <FilterPanel
+                    filters={filterableProperties}
+                    onFilterSelect={this.updateFilters.bind(this)}
+                />
+            </div>);
+        }
     }
 
     renderBreadcrumb() {
@@ -127,9 +185,14 @@ class CollectionItems extends React.Component {
     renderHeader() {
         const {
             searchText,
-        } = this.state;
+            filters,
+        } = this.state,
+            filterKeys = Object.keys(filters);
 
         return (<div className={'collection-items__header'}>
+            <FontAwesomeIcon icon={faFilter} onClick={this.handleFilterPanel.bind(this)}
+                             className={`collection-items__filter ${filterKeys.length > 0 
+                                 ? 'collection-items__filter-selected' : ''}`}/>
             <SearchField
                 placeholder={"Search..."}
                 searchText={searchText}
@@ -157,6 +220,7 @@ class CollectionItems extends React.Component {
 
         return (
             <div className={'collection-items'}>
+                {this.renderFilter()}
                 {this.renderMenu()}
                 {this.renderHeader()}
                 <div className={'collection-items__content'}>
@@ -186,6 +250,7 @@ CollectionItems.propTypes = {
     onCategorySelect: PropTypes.func,
     enableBreadcrumb: PropTypes.bool,
     displayFullCollection: PropTypes.bool,
+    filterableProperties: PropTypes.object,
 };
 
 /* istanbul ignore next */
@@ -198,6 +263,7 @@ CollectionItems.defaultProps = {
     },
     enableBreadcrumb: true,
     displayFullCollection: true,
+    filterableProperties: {},
 };
 
 export default CollectionItems;

@@ -5,6 +5,7 @@ import {assert} from "chai";
 import Menu from "../menu";
 import CollectionItems from "../";
 import ItemContainer from "../item-container"
+import FilterPanel from "../filter-panel";
 import SearchField from "react-search-field";
 import _flatten from "lodash/flatten";
 import _values from "lodash/values";
@@ -28,13 +29,16 @@ describe("CollectionItems", () => {
     const items = {
         1: [{
             title: "title1",
+            aProperty: "something",
         }],
         5: [
             {
                 title: "title2",
+                aProperty: "something",
             },
             {
                 title: "title3",
+                aProperty: "somethingElse",
             }
         ]
     };
@@ -208,6 +212,89 @@ describe("CollectionItems", () => {
                                                      items={items}/>);
             assert.equal(component.find(ItemContainer).props().items.length, 0,
                 "Expected no items since category has not been selected");
+        });
+
+    });
+
+    describe("Filter panel display", () => {
+
+        it("displays no panel by default", () => {
+            const component = mount(<CollectionItems categories={categories}
+                                                     filterableProperties={
+                                                         {something: {label: 'Title', values: ['doh']}}}
+                                                     items={items}/>);
+            assert.isFalse(component.find('.collection-items__filter-area.filter-area--show').exists(),
+                "Expected no filter panel to be opened");
+        });
+
+        it("displays filter panel when clicked", () => {
+            const component = mount(<CollectionItems categories={categories}
+                                                     filterableProperties={
+                                                         {something: {label: 'Title', values: ['doh']}}}
+                                                     items={items}/>);
+            component.find('.collection-items__filter').at(0).simulate('click');
+            assert.isTrue(component.find('.collection-items__filter-area.filter-area--show').exists(),
+                "Expected filter panel to be opened");
+        });
+    });
+
+    describe("Filtering items", () => {
+
+        it("No filters are included by default", () => {
+            const component = mount(<CollectionItems categories={categories}
+                                                     items={items}/>);
+            assert.equal(component.find(ItemContainer).props().items.length, 3,
+                "Expected all items to be included");
+            assert.isFalse(component.find('.collection-items__filter-selected').exists(),
+                "Expected filter icon to be the default one");
+        });
+
+        it("filters by item property value", () => {
+            const filterProperties = {title: ['title1'], aProperty: ["something", "nothing"]},
+                component = mount(<CollectionItems categories={categories}
+                                                   filterableProperties={{
+                                                       title: {label: 'Title', values: ['title1']},
+                                                       aProperty: {label: 'Title', values: ['something']}
+                                                   }}
+                                                   items={items}/>);
+            component.find(FilterPanel).props().onFilterSelect(filterProperties);
+            setImmediate(() => {
+                component.update();
+                assert.equal(component.find(ItemContainer).props().items.length, 1,
+                    "Expected a unique item to be filtered");
+                assert.isTrue(component.find('.collection-items__filter-selected').exists(),
+                    "Expected filter icon to be updated");
+            });
+        });
+
+        it("filters are reset if no values are included", () => {
+            const filterProperties = {title: []},
+                component = mount(<CollectionItems categories={categories}
+                                                   filterableProperties={{
+                                                       title: {label: 'Title', values: ['title1']},
+                                                       aProperty: {label: 'Title', values: ['something']}
+                                                   }}
+                                                   items={items}/>);
+            component.find(FilterPanel).props().onFilterSelect(filterProperties);
+            setImmediate(() => {
+                component.update();
+                assert.equal(component.find(ItemContainer).props().items.length, 3,
+                    "Expected all items to be displayed");
+            });
+        });
+
+        it("renders filter panel if filterable properties are included", () => {
+            const component = mount(<CollectionItems categories={categories}
+                                                     filterableProperties={
+                                                         {something: {label: 'Title', values: ['doh']}}}
+                                                     items={items}/>);
+            assert.isTrue(component.find(FilterPanel).exists(), "Expected filter panel component to be rendered");
+        });
+
+        it("renders no filter panel if filterable properties are not included", () => {
+            const component = mount(<CollectionItems categories={categories}
+                                                     items={items}/>);
+            assert.isFalse(component.find(FilterPanel).exists(), "Expected no filter panel component");
         });
 
     });

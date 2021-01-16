@@ -49,5 +49,15 @@ ReactDOM.render(React.createElement(() =>
     <CollectionItems
         items={items}
         categories={categories}
-        onItemClick={(item)=>{console.log(item)}}
+        onItemClick={(item) => {
+            console.log(item)
+        }}
+        filterableProperties={{
+            title: {label: 'Title', values: ['Hellbilly Deluxe', 'Art']},
+            subtitle: {label: 'Something cool', values: ['Nothing', 'Nothing at all']},
+            subtitle1: {
+                label: 'Nothing important stuff',
+                values: ['Nothing', 'Nothing at allNothing at allNothing at all']
+            },
+        }}
     />), window.collectionitems);

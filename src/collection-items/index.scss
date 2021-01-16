@@ -10,6 +10,7 @@ $header-height: 50px;
 $header-background-color: rgb(26, 26, 26);
 $home-color: #CDB831;
 $home-color-secondary: #CD3840;
+$filter-secondary-color: #CD3840;
 
 $width-xs: 480px;
 
@@ -18,12 +19,49 @@ $width-xs: 480px;
     color: $primary-color;
     font-size: $default-size;
 
+    &__filter {
+        width: 1.5em !important;
+        color: $secondary-color;
+        display: inline-flex;
+        justify-content: space-between;
+        height: 35px;
+        position: absolute;
+        right: 250px;
+        top: 6px;
+        cursor: pointer;
+
+        &-selected {
+            color: $home-color;
+        }
+
+        &:hover {
+            color: $filter-secondary-color;
+        }
+
+        @media (max-width: #{$width-xs}) {
+            right: 150px;
+        }
+    }
+
+    &__filter-area {
+        width: 100%;
+        background-color: $secondary-color-alpha;
+        position: relative;
+        display: none;
+
+        &.filter-area--show {
+            display: block;
+            top: $header-height;
+        }
+    }
+
     &__header {
         width: 100%;
         height: $header-height;
         background-color: $header-background-color;
         position: fixed;
         top: 0;
+        z-index: 100;
     }
 
     &__search-field {
@@ -75,7 +113,8 @@ $width-xs: 480px;
         }
     }
 
-    &__content{
+    &__content {
+        transition: margin-top ease .5s;
         margin-top: $header-height + 5;
     }
 
