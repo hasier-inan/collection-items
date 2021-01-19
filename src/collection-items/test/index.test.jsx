@@ -216,6 +216,35 @@ describe("CollectionItems", () => {
 
     });
 
+    describe("grouped collection", () => {
+
+        it("does not group by default", () => {
+            const component = mount(<CollectionItems displayFullCollection={true} categories={categories}
+                                                     items={items}/>);
+            assert.equal(component.find(ItemContainer).length, 1,
+                "Expected a unique item container");
+        });
+
+        it("does group by property but no title is included", () => {
+            const component = mount(<CollectionItems displayFullCollection={true} categories={categories}
+                                                     items={items} groupBy={"aProperty"} showGroup={false}/>);
+            assert.equal(component.find(ItemContainer).length, 2,
+                "Expected grouped item containers");
+            assert.isFalse(component.find('.item-container__title').exists(),
+                "Expected no group title");
+        });
+
+        it("does group by property and group title is included", () => {
+            const component = mount(<CollectionItems displayFullCollection={true} categories={categories}
+                                                     items={items} groupBy={"aProperty"}/>);
+            assert.equal(component.find('.item-container__title').at(0).text(), "something",
+                "Expected first group title");
+            assert.equal(component.find('.item-container__title').at(1).text(), "somethingElse",
+                "Expected first group title");
+        });
+
+    });
+
     describe("Filter panel display", () => {
 
         it("displays no panel by default", () => {

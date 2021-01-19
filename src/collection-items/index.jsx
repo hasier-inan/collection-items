@@ -9,6 +9,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import Item from "./item";
 import _filter from "lodash/filter";
+import _groupBy from "lodash/groupBy";
+import _map from "lodash/map";
 import _flatten from "lodash/flatten";
 import _values from "lodash/values";
 import FilterPanel from "./filter-panel";
@@ -104,7 +106,7 @@ class CollectionItems extends React.Component {
             let allPropertiesMatch = true;
             filterKeys.forEach((filterKey) => {
                 const allowedValues = filters[filterKey];
-                
+
                 if (allowedValues.length > 0) {
                     allPropertiesMatch = allPropertiesMatch && allowedValues.includes(item[filterKey]);
                 }
@@ -143,6 +145,29 @@ class CollectionItems extends React.Component {
 
     updateFilters(filters) {
         this.setState({filters});
+    }
+
+    renderItemContainers() {
+        const {
+                groupBy,
+                showGroup,
+            } = this.props,
+            filteredItems = this.retrieveItems();
+
+        if (!groupBy) {
+            return <ItemContainer
+                {...this.props}
+                items={filteredItems}
+            />;
+        }
+        
+        return _map(_groupBy(filteredItems, groupBy), (items, group) => {
+               return <ItemContainer
+                   {...this.props}
+                   key={group}
+                   items={items}
+                   title={showGroup ? group : undefined} />;
+        })
     }
 
     renderFilter() {
@@ -184,14 +209,14 @@ class CollectionItems extends React.Component {
 
     renderHeader() {
         const {
-            searchText,
-            filters,
-        } = this.state,
+                searchText,
+                filters,
+            } = this.state,
             filterKeys = Object.keys(filters);
 
         return (<div className={'collection-items__header'}>
             <FontAwesomeIcon icon={faFilter} onClick={this.handleFilterPanel.bind(this)}
-                             className={`collection-items__filter ${filterKeys.length > 0 
+                             className={`collection-items__filter ${filterKeys.length > 0
                                  ? 'collection-items__filter-selected' : ''}`}/>
             <SearchField
                 placeholder={"Search..."}
@@ -217,7 +242,6 @@ class CollectionItems extends React.Component {
     }
 
     render() {
-
         return (
             <div className={'collection-items'}>
                 {this.renderFilter()}
@@ -225,10 +249,7 @@ class CollectionItems extends React.Component {
                 {this.renderHeader()}
                 <div className={'collection-items__content'}>
                     {this.renderBreadcrumb()}
-                    <ItemContainer
-                        {...this.props}
-                        items={this.retrieveItems()}
-                    />
+                    {this.renderItemContainers()}
                 </div>
             </div>);
     }
@@ -251,6 +272,8 @@ CollectionItems.propTypes = {
     enableBreadcrumb: PropTypes.bool,
     displayFullCollection: PropTypes.bool,
     filterableProperties: PropTypes.object,
+    groupBy: PropTypes.string,
+    showGroup: PropTypes.bool,
 };
 
 /* istanbul ignore next */
@@ -264,6 +287,8 @@ CollectionItems.defaultProps = {
     enableBreadcrumb: true,
     displayFullCollection: true,
     filterableProperties: {},
+    groupBy: '',
+    showGroup: true,
 };
 
 export default CollectionItems;
