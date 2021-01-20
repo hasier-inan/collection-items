@@ -12,6 +12,7 @@ import _filter from "lodash/filter";
 import _groupBy from "lodash/groupBy";
 import _map from "lodash/map";
 import _flatten from "lodash/flatten";
+import _every from "lodash/every";
 import _values from "lodash/values";
 import FilterPanel from "./filter-panel";
 
@@ -65,7 +66,7 @@ class CollectionItems extends React.Component {
         } = this.props;
 
         if (displayFullCollection) {
-            return _flatten(_values(items))
+            return _flatten(_values(items));
         }
     }
 
@@ -212,12 +213,12 @@ class CollectionItems extends React.Component {
                 searchText,
                 filters,
             } = this.state,
-            filterKeys = Object.keys(filters);
+        isFiltered = Object.keys(filters).length > 0 && _every(filters, (value) => value.length > 0) ;
 
         return (<div className={'collection-items__header'}>
             <FontAwesomeIcon icon={faFilter} onClick={this.handleFilterPanel.bind(this)}
-                             className={`collection-items__filter ${filterKeys.length > 0
-                                 ? 'collection-items__filter-selected' : ''}`}/>
+                             className={`collection-items__filter ${isFiltered ? 
+                                 'collection-items__filter-selected' : ''}`}/>
             <SearchField
                 placeholder={"Search..."}
                 searchText={searchText}
