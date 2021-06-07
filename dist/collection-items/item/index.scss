@@ -1,0 +1,30 @@
+$item-background: rgba(120, 120, 120, .2);
+
+.item {
+    text-align: center;
+    background-color: $item-background;
+    cursor: default;
+
+    &__image {
+        cursor: pointer;
+    }
+
+    &__title {
+        font-size: 1em;
+        padding: 0 10px;
+    }
+
+    &__subtitle {
+        font-size: .75em;
+        padding: 0 10px;
+        margin-bottom: .5em;
+    }
+
+    .ellipsify {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+}
+

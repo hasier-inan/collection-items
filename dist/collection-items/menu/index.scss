@@ -1,0 +1,42 @@
+$menu-logo-color: #CDB831;
+$menu-primary-color: #CDCDCD;
+$menu-secondary-color: #CD3840;
+$menu-background-color: rgba(120, 120, 120, 1);
+
+@import "./react-burger-menu";
+
+.menu-item {
+    color: $menu-primary-color;
+    cursor: pointer;
+    font-size: 20px;
+
+    &:focus {
+        outline: none;
+    }
+
+    &:hover, &.selected {
+        color: $menu-secondary-color;
+        text-decoration: none;
+    }
+
+    &--bullet {
+        margin-right: 10px;
+        width: 10px !important;
+    }
+}
+
+.bm-cross-button {
+    height: 24px;
+    width: 24px;
+
+    button:focus {
+        outline: none;
+    }
+
+    &:hover {
+        .bm-cross {
+            background-color: $menu-secondary-color;
+        }
+    }
+}
+

@@ -1,0 +1,121 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,700,800);
+@import "./bootstrap";
+
+$roboto-slab: 'Roboto Slab', serif;
+$primary-color: #000000;
+$secondary-color: rgb(120, 120, 120);
+$secondary-color-alpha: rgba(120, 120, 120, .5);
+$default-size: 12px;
+$header-height: 50px;
+$header-background-color: rgb(26, 26, 26);
+$home-color: #CDB831;
+$home-color-secondary: #CD3840;
+$filter-secondary-color: #CD3840;
+
+$width-xs: 480px;
+
+.collection-items {
+    font-family: 'Raleway', Arial, sans-serif;
+    color: $primary-color;
+    font-size: $default-size;
+
+    &__filter {
+        width: 1.5em !important;
+        color: $secondary-color;
+        display: inline-flex;
+        justify-content: space-between;
+        height: 35px;
+        position: absolute;
+        right: 250px;
+        top: 6px;
+        cursor: pointer;
+
+        &-selected {
+            color: $home-color;
+        }
+
+        &:hover {
+            color: $filter-secondary-color;
+        }
+
+        @media (max-width: #{$width-xs}) {
+            right: 150px;
+        }
+    }
+
+    &__filter-area {
+        width: 100%;
+        background-color: $secondary-color-alpha;
+        position: relative;
+        display: none;
+
+        &.filter-area--show {
+            display: block;
+            top: $header-height;
+        }
+    }
+
+    &__header {
+        width: 100%;
+        height: $header-height;
+        background-color: $header-background-color;
+        position: fixed;
+        top: 0;
+        z-index: 100;
+    }
+
+    &__search-field {
+        position: absolute;
+        right: 6px;
+        top: 6px;
+        border: 1px solid $secondary-color-alpha !important;
+        border-radius: 6px;
+
+        button {
+            background: $secondary-color-alpha !important;
+            border-left: 1px solid $secondary-color-alpha !important;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        input {
+            background: transparent;
+            color: $home-color !important;
+
+            @media (max-width: #{$width-xs}) {
+                width: 100px;
+            }
+        }
+    }
+
+    &__breadcrumb {
+        font-size: 1.5em;
+        text-align: center;
+        margin: 1em 0;
+
+        .breadcrumb-item {
+            cursor: default;
+            margin: 0 .25em;
+
+            &--home {
+                color: $home-color;
+                cursor: pointer;
+
+                &:hover {
+                    color: $home-color-secondary;
+                }
+            }
+
+            &--category {
+                font-weight: bold;
+            }
+
+        }
+    }
+
+    &__content {
+        transition: margin-top ease .5s;
+        margin-top: $header-height + 5;
+    }
+
+}

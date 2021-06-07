@@ -1,0 +1,20 @@
+$width-xs: 480px;
+
+.item-filter {
+
+    &__select {
+        margin: 1em;
+        display: inline-block;
+
+        div {
+            cursor: pointer;
+        }
+
+        @media (max-width: #{$width-xs}) {
+            margin: 0;
+            width: 100% !important;
+            padding: 1em;
+        }
+    }
+
+}
