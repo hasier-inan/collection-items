@@ -189,6 +189,14 @@ class CollectionItems extends React.Component {
         }
     }
 
+    renderOverlay() {
+        const {
+                displayFilter,
+            } = this.state;
+
+        return <div className={`container-overlay ${displayFilter ? 'container-overlay--show' : ''}`}></div>;
+    }
+
     renderBreadcrumb() {
         const {
                 enableBreadcrumb,
@@ -233,6 +241,7 @@ class CollectionItems extends React.Component {
         const {
             categories,
             isMenuOpen,
+            displayFilter,
         } = this.state;
 
         if (categories.length > 0) {
@@ -249,6 +258,7 @@ class CollectionItems extends React.Component {
                 {this.renderMenu()}
                 {this.renderHeader()}
                 <div className={'collection-items__content'}>
+                    {this.renderOverlay()}
                     {this.renderBreadcrumb()}
                     {this.renderItemContainers()}
                 </div>

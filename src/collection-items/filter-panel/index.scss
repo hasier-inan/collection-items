@@ -8,6 +8,7 @@ $width-xs: 480px;
 
         div {
             cursor: pointer;
+            z-index: 1001;
         }
 
         @media (max-width: #{$width-xs}) {

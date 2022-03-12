@@ -240,6 +240,14 @@ var CollectionItems = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
+    key: "renderOverlay",
+    value: function renderOverlay() {
+      var displayFilter = this.state.displayFilter;
+      return /*#__PURE__*/_react["default"].createElement("div", {
+        className: "container-overlay ".concat(displayFilter ? 'container-overlay--show' : '')
+      });
+    }
+  }, {
     key: "renderBreadcrumb",
     value: function renderBreadcrumb() {
       var enableBreadcrumb = this.props.enableBreadcrumb,
@@ -290,7 +298,8 @@ var CollectionItems = /*#__PURE__*/function (_React$Component) {
     value: function renderMenu() {
       var _this$state4 = this.state,
           categories = _this$state4.categories,
-          isMenuOpen = _this$state4.isMenuOpen;
+          isMenuOpen = _this$state4.isMenuOpen,
+          displayFilter = _this$state4.displayFilter;
 
       if (categories.length > 0) {
         return /*#__PURE__*/_react["default"].createElement(_menu["default"], {
@@ -306,7 +315,7 @@ var CollectionItems = /*#__PURE__*/function (_React$Component) {
         className: 'collection-items'
       }, this.renderFilter(), this.renderMenu(), this.renderHeader(), /*#__PURE__*/_react["default"].createElement("div", {
         className: 'collection-items__content'
-      }, this.renderBreadcrumb(), this.renderItemContainers()));
+      }, this.renderOverlay(), this.renderBreadcrumb(), this.renderItemContainers()));
     }
   }]);
 
