@@ -216,6 +216,24 @@ class CollectionItems extends React.Component {
         }
     }
 
+    renderTitle() {
+        const {title} = this.props;
+
+        if(title) {
+            return (<div className={'collection-items__title'}>{title}</div>);
+        }
+    }
+
+    renderFooter() {
+        const {footer} = this.props;
+
+        if(footer){
+            return (
+                <div className={'collection-items__footer'}>{footer}</div>
+            )
+        }
+    }
+
     renderHeader() {
         const {
                 searchText,
@@ -223,7 +241,9 @@ class CollectionItems extends React.Component {
             } = this.state,
         isFiltered = Object.keys(filters).length > 0 && _every(filters, (value) => value.length > 0) ;
 
-        return (<div className={'collection-items__header'}>
+        return (
+            <div className={'collection-items__header'}>
+            {this.renderTitle()}
             <FontAwesomeIcon icon={faFilter} onClick={this.handleFilterPanel.bind(this)}
                              className={`collection-items__filter ${isFiltered ? 
                                  'collection-items__filter-selected' : ''}`}/>
@@ -262,6 +282,7 @@ class CollectionItems extends React.Component {
                     {this.renderBreadcrumb()}
                     {this.renderItemContainers()}
                 </div>
+                {this.renderFooter()}
             </div>);
     }
 }
@@ -284,6 +305,8 @@ CollectionItems.propTypes = {
     displayFullCollection: PropTypes.bool,
     filterableProperties: PropTypes.object,
     groupBy: PropTypes.string,
+    title: PropTypes.string,
+    footer: PropTypes.string,
     showGroup: PropTypes.bool,
 };
 
@@ -299,6 +322,8 @@ CollectionItems.defaultProps = {
     displayFullCollection: true,
     filterableProperties: {},
     groupBy: '',
+    title: undefined,
+    footer: undefined,
     showGroup: true,
 };
 

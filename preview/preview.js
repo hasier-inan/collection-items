@@ -65,5 +65,7 @@ ReactDOM.render(React.createElement(() =>
                 values: ['Nothing', 'Nothing at allNothing at allNothing at all']
             },
         }}
+        title={'This is the page'}
+        footer={'https://github.com/hasier-inan'}
         groupBy={'group'}
     />), window.collectionitems);

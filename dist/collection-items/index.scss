@@ -7,6 +7,7 @@ $secondary-color: rgb(120, 120, 120);
 $secondary-color-alpha: rgba(120, 120, 120, .5);
 $default-size: 12px;
 $header-height: 50px;
+$footer-height: 20px;
 $header-background-color: rgb(26, 26, 26);
 $home-color: #CDB831;
 $home-color-secondary: #CD3840;
@@ -62,6 +63,25 @@ $width-xs: 480px;
         position: fixed;
         top: 0;
         z-index: 100;
+    }
+
+    &__footer {
+        width: 100%;
+        height: $footer-height;
+        color: $home-color;
+        background-color: $header-background-color;
+        position: fixed;
+        bottom: 0;
+        z-index: 100;
+        text-align: right;
+        padding-right: 1em;
+    }
+
+    &__title {
+        color: $home-color;
+        text-align: center;
+        font-size: 2em;
+        line-height: 2em;
     }
 
     &__search-field {

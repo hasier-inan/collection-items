@@ -216,6 +216,32 @@ describe("CollectionItems", () => {
 
     });
 
+    describe("Page title", () => {
+
+        it("includes title if provided", () => {
+            const title = 'something',
+                component = mount(<CollectionItems displayFullCollection={false} categories={categories}
+                                                     title={title}
+                                                     items={items}/>);
+            assert.equal(component.find('.collection-items__title').at(0).text(), title,
+                "Expected page title to match");
+        });
+
+    });
+
+    describe("Footer title", () => {
+
+        it("includes footer title if provided", () => {
+            const title = 'something',
+                component = mount(<CollectionItems displayFullCollection={false} categories={categories}
+                                                     footer={title}
+                                                     items={items}/>);
+            assert.equal(component.find('.collection-items__footer').at(0).text(), title,
+                "Expected footer title to match");
+        });
+
+    });
+
     describe("grouped collection", () => {
 
         it("does not group by default", () => {

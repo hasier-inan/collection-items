@@ -271,6 +271,28 @@ var CollectionItems = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
+    key: "renderTitle",
+    value: function renderTitle() {
+      var title = this.props.title;
+
+      if (title) {
+        return /*#__PURE__*/_react["default"].createElement("div", {
+          className: 'collection-items__title'
+        }, title);
+      }
+    }
+  }, {
+    key: "renderFooter",
+    value: function renderFooter() {
+      var footer = this.props.footer;
+
+      if (footer) {
+        return /*#__PURE__*/_react["default"].createElement("div", {
+          className: 'collection-items__footer'
+        }, footer);
+      }
+    }
+  }, {
     key: "renderHeader",
     value: function renderHeader() {
       var _this$state3 = this.state,
@@ -281,7 +303,7 @@ var CollectionItems = /*#__PURE__*/function (_React$Component) {
       });
       return /*#__PURE__*/_react["default"].createElement("div", {
         className: 'collection-items__header'
-      }, /*#__PURE__*/_react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+      }, this.renderTitle(), /*#__PURE__*/_react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
         icon: _freeSolidSvgIcons.faFilter,
         onClick: this.handleFilterPanel.bind(this),
         className: "collection-items__filter ".concat(isFiltered ? 'collection-items__filter-selected' : '')
@@ -315,7 +337,7 @@ var CollectionItems = /*#__PURE__*/function (_React$Component) {
         className: 'collection-items'
       }, this.renderFilter(), this.renderMenu(), this.renderHeader(), /*#__PURE__*/_react["default"].createElement("div", {
         className: 'collection-items__content'
-      }, this.renderOverlay(), this.renderBreadcrumb(), this.renderItemContainers()));
+      }, this.renderOverlay(), this.renderBreadcrumb(), this.renderItemContainers()), this.renderFooter());
     }
   }]);
 
@@ -335,6 +357,8 @@ CollectionItems.propTypes = {
   displayFullCollection: _propTypes["default"].bool,
   filterableProperties: _propTypes["default"].object,
   groupBy: _propTypes["default"].string,
+  title: _propTypes["default"].string,
+  footer: _propTypes["default"].string,
   showGroup: _propTypes["default"].bool
 };
 /* istanbul ignore next */
@@ -348,6 +372,8 @@ CollectionItems.defaultProps = {
   displayFullCollection: true,
   filterableProperties: {},
   groupBy: '',
+  title: undefined,
+  footer: undefined,
   showGroup: true
 };
 var _default = CollectionItems;
