@@ -61,11 +61,13 @@ var Item = function Item(props) {
   var className = props.className,
       title = props.title,
       width = props.width,
-      subtitleRender = props.subtitleRender;
+      subtitleRender = props.subtitleRender,
+      fixedWidth = props.fixedWidth,
+      containerWidth = fixedWidth ? fixedWidth : width;
   return /*#__PURE__*/_react["default"].createElement("div", {
     className: "item ".concat(className),
     style: {
-      width: "".concat(width, "px")
+      width: "".concat(containerWidth, "px")
     }
   }, renderImage(), /*#__PURE__*/_react["default"].createElement("div", {
     title: title,
@@ -80,6 +82,7 @@ Item.propTypes = {
   "subtitle": _propTypes["default"].string,
   "width": _propTypes["default"].number,
   "height": _propTypes["default"].number,
+  "fixedWidth": _propTypes["default"].number,
   "lazyLoad": _propTypes["default"].bool,
   "onClick": _propTypes["default"].func,
   "subtitleRender": _propTypes["default"].func
@@ -92,6 +95,7 @@ Item.defaultProps = {
   "subtitle": "",
   "width": 150,
   "height": 150,
+  "fixedWidth": 0,
   "lazyLoad": true,
   "onClick": function onClick() {},
   "subtitleRender": function subtitleRender() {}

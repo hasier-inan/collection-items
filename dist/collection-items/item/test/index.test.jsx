@@ -82,6 +82,13 @@ describe("Item", () => {
                 "Expected defaultitem width to be set");
         });
 
+        it("fixed width is set", () => {
+            const width = 666, containerWidth = 999,
+                anItem = mount(<Item {...imageOptions} width={width} fixedWidth={containerWidth} />);
+            assert.deepEqual(anItem.find(".item").prop("style"), {width: `${containerWidth}px`},
+                "Expected defaultitem width to be set");
+        });
+
     });
 
     describe("Item interaction", () => {

@@ -297,6 +297,7 @@ CollectionItems.propTypes = {
             'id': PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         })
     ),
+    fixedWidth: PropTypes.number,
     defaultCategory: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     items: PropTypes.objectOf(
         PropTypes.arrayOf(
@@ -317,6 +318,7 @@ CollectionItems.propTypes = {
 /* istanbul ignore next */
 CollectionItems.defaultProps = {
     categories: [],
+    fixedWidth: 0,
     defaultCategory: undefined,
     onItemClick: () => {
     },

@@ -36,7 +36,8 @@ var ItemContainer = function ItemContainer(props) {
         defaultHeight = props.defaultHeight,
         onItemClick = props.onItemClick,
         lazyLoad = props.lazyLoad,
-        _subtitleRender = props.subtitleRender;
+        _subtitleRender = props.subtitleRender,
+        fixedWidth = props.fixedWidth;
     return items.map(function (item, index) {
       var itemProps = (0, _merge2["default"])({
         width: defaultWidth,
@@ -51,6 +52,7 @@ var ItemContainer = function ItemContainer(props) {
           onItemClick(item);
         },
         lazyLoad: lazyLoad,
+        fixedWidth: fixedWidth,
         subtitleRender: function subtitleRender() {
           return _subtitleRender(item);
         }
@@ -68,6 +70,7 @@ ItemContainer.propTypes = {
   "title": _propTypes["default"].string,
   "defaultWidth": _propTypes["default"].number,
   "defaultHeight": _propTypes["default"].number,
+  "fixedWidth": _propTypes["default"].number,
   "onItemClick": _propTypes["default"].func,
   "lazyLoad": _propTypes["default"].bool,
   "subtitleRender": _propTypes["default"].func
@@ -79,6 +82,7 @@ ItemContainer.defaultProps = {
   "title": "",
   "defaultWidth": 150,
   "defaultHeight": 150,
+  "fixedWidth": 0,
   "onItemClick": function onItemClick() {},
   "lazyLoad": true,
   "subtitleRender": function subtitleRender() {}

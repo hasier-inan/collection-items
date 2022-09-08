@@ -9,6 +9,7 @@ const items = {
         subtitle2: '**',
         image: "https://img.discogs.com/i3O2NPFVVU0unDFHvrAoV3KfMAU=/fit-in/500x500/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-12641858-1539175125-1540.jpeg.jpg",
         group: "one",
+        width: 50,
     }],
     5: [{
         title: "Hellbilly Deluxe",
@@ -16,6 +17,7 @@ const items = {
         subtitle2: '****',
         image: "https://img.discogs.com/i3O2NPFVVU0unDFHvrAoV3KfMAU=/fit-in/500x500/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-12641858-1539175125-1540.jpeg.jpg",
         group: "one",
+        width: 80,
     },
         {
             title: "Art",
@@ -58,6 +60,7 @@ const categories = [
 ReactDOM.render(React.createElement(() =>
     <CollectionItems
         items={items}
+        fixedWidth={180}
         categories={categories}
         onItemClick={(item) => {
             console.log(item)

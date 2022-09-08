@@ -48,10 +48,12 @@ const Item = (props) => {
         title,
         width,
         subtitleRender,
-    } = props;
+        fixedWidth,
+    } = props,
+    containerWidth = fixedWidth ? fixedWidth : width;
 
     return (
-        <div className={`item ${className}`} style={{width: `${width}px`}}>
+        <div className={`item ${className}`} style={{width: `${containerWidth}px`}}>
             {renderImage()}
             <div title={title} className={'item__title ellipsify'}>{title}</div>
             {renderSubtitle()}
@@ -67,6 +69,7 @@ Item.propTypes = {
     "subtitle": PropTypes.string,
     "width": PropTypes.number,
     "height": PropTypes.number,
+    "fixedWidth": PropTypes.number,
     "lazyLoad": PropTypes.bool,
     "onClick": PropTypes.func,
     "subtitleRender": PropTypes.func,
@@ -79,6 +82,7 @@ Item.defaultProps = {
     "subtitle": "",
     "width": 150,
     "height": 150,
+    "fixedWidth": 0,
     "lazyLoad": true,
     "onClick": () => {
     },

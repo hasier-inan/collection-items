@@ -351,6 +351,7 @@ CollectionItems.propTypes = {
     'title': _propTypes["default"].string.isRequired,
     'id': _propTypes["default"].oneOfType([_propTypes["default"].number, _propTypes["default"].string])
   })),
+  fixedWidth: _propTypes["default"].number,
   defaultCategory: _propTypes["default"].oneOfType([_propTypes["default"].number, _propTypes["default"].string]),
   items: _propTypes["default"].objectOf(_propTypes["default"].arrayOf(_propTypes["default"].shape(_item["default"].propTypes))).isRequired,
   onItemClick: _propTypes["default"].func,
@@ -368,6 +369,7 @@ CollectionItems.propTypes = {
 
 CollectionItems.defaultProps = {
   categories: [],
+  fixedWidth: 0,
   defaultCategory: undefined,
   onItemClick: function onItemClick() {},
   onCategorySelect: function onCategorySelect() {},

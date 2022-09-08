@@ -25,6 +25,7 @@ const ItemContainer = (props) => {
                 onItemClick,
                 lazyLoad,
                 subtitleRender,
+                fixedWidth,
             } = props;
 
         return items.map((item, index) => {
@@ -41,6 +42,7 @@ const ItemContainer = (props) => {
                                  onItemClick(item);
                              }}
                              lazyLoad={lazyLoad}
+                             fixedWidth={fixedWidth}
                             subtitleRender={() => subtitleRender(item)}
                 />
             }
@@ -60,6 +62,7 @@ ItemContainer.propTypes = {
     "title": PropTypes.string,
     "defaultWidth": PropTypes.number,
     "defaultHeight": PropTypes.number,
+    "fixedWidth": PropTypes.number,
     "onItemClick": PropTypes.func,
     "lazyLoad": PropTypes.bool,
     "subtitleRender": PropTypes.func,
@@ -71,6 +74,7 @@ ItemContainer.defaultProps = {
     "title": "",
     "defaultWidth": 150,
     "defaultHeight": 150,
+    "fixedWidth": 0,
     "onItemClick": () => {
     },
     "lazyLoad": true,
