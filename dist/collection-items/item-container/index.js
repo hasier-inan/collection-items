@@ -35,7 +35,8 @@ var ItemContainer = function ItemContainer(props) {
         defaultWidth = props.defaultWidth,
         defaultHeight = props.defaultHeight,
         onItemClick = props.onItemClick,
-        lazyLoad = props.lazyLoad;
+        lazyLoad = props.lazyLoad,
+        _subtitleRender = props.subtitleRender;
     return items.map(function (item, index) {
       var itemProps = (0, _merge2["default"])({
         width: defaultWidth,
@@ -49,7 +50,10 @@ var ItemContainer = function ItemContainer(props) {
         onClick: function onClick() {
           onItemClick(item);
         },
-        lazyLoad: lazyLoad
+        lazyLoad: lazyLoad,
+        subtitleRender: function subtitleRender() {
+          return _subtitleRender(item);
+        }
       }));
     });
   };
@@ -65,7 +69,8 @@ ItemContainer.propTypes = {
   "defaultWidth": _propTypes["default"].number,
   "defaultHeight": _propTypes["default"].number,
   "onItemClick": _propTypes["default"].func,
-  "lazyLoad": _propTypes["default"].bool
+  "lazyLoad": _propTypes["default"].bool,
+  "subtitleRender": _propTypes["default"].func
 };
 /* istanbul ignore next */
 
@@ -75,7 +80,8 @@ ItemContainer.defaultProps = {
   "defaultWidth": 150,
   "defaultHeight": 150,
   "onItemClick": function onItemClick() {},
-  "lazyLoad": true
+  "lazyLoad": true,
+  "subtitleRender": function subtitleRender() {}
 };
 var _default = ItemContainer;
 exports["default"] = _default;

@@ -208,6 +208,7 @@ var CollectionItems = /*#__PURE__*/function (_React$Component) {
       var _this$props3 = this.props,
           groupBy = _this$props3.groupBy,
           showGroup = _this$props3.showGroup,
+          subtitleRender = _this$props3.subtitleRender,
           filteredItems = this.retrieveItems();
 
       if (!groupBy) {
@@ -220,7 +221,8 @@ var CollectionItems = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/_react["default"].createElement(_itemContainer["default"], _extends({}, _this3.props, {
           key: group,
           items: items,
-          title: showGroup ? group : undefined
+          title: showGroup ? group : undefined,
+          subtitleRender: subtitleRender
         }));
       });
     }
@@ -359,7 +361,8 @@ CollectionItems.propTypes = {
   groupBy: _propTypes["default"].string,
   title: _propTypes["default"].string,
   footer: _propTypes["default"].string,
-  showGroup: _propTypes["default"].bool
+  showGroup: _propTypes["default"].bool,
+  subtitleRender: _propTypes["default"].func
 };
 /* istanbul ignore next */
 
@@ -374,7 +377,8 @@ CollectionItems.defaultProps = {
   groupBy: '',
   title: undefined,
   footer: undefined,
-  showGroup: true
+  showGroup: true,
+  subtitleRender: function subtitleRender() {}
 };
 var _default = CollectionItems;
 exports["default"] = _default;

@@ -60,7 +60,8 @@ var Item = function Item(props) {
 
   var className = props.className,
       title = props.title,
-      width = props.width;
+      width = props.width,
+      subtitleRender = props.subtitleRender;
   return /*#__PURE__*/_react["default"].createElement("div", {
     className: "item ".concat(className),
     style: {
@@ -69,7 +70,7 @@ var Item = function Item(props) {
   }, renderImage(), /*#__PURE__*/_react["default"].createElement("div", {
     title: title,
     className: 'item__title ellipsify'
-  }, title), renderSubtitle());
+  }, title), renderSubtitle(), subtitleRender());
 };
 
 Item.propTypes = {
@@ -80,7 +81,8 @@ Item.propTypes = {
   "width": _propTypes["default"].number,
   "height": _propTypes["default"].number,
   "lazyLoad": _propTypes["default"].bool,
-  "onClick": _propTypes["default"].func
+  "onClick": _propTypes["default"].func,
+  "subtitleRender": _propTypes["default"].func
 };
 /* istanbul ignore next */
 
@@ -91,7 +93,8 @@ Item.defaultProps = {
   "width": 150,
   "height": 150,
   "lazyLoad": true,
-  "onClick": function onClick() {}
+  "onClick": function onClick() {},
+  "subtitleRender": function subtitleRender() {}
 };
 var _default = Item;
 exports["default"] = _default;

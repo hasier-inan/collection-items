@@ -152,6 +152,7 @@ class CollectionItems extends React.Component {
         const {
                 groupBy,
                 showGroup,
+                subtitleRender,
             } = this.props,
             filteredItems = this.retrieveItems();
 
@@ -161,13 +162,15 @@ class CollectionItems extends React.Component {
                 items={filteredItems}
             />;
         }
-        
+
         return _map(_groupBy(filteredItems, groupBy), (items, group) => {
                return <ItemContainer
                    {...this.props}
                    key={group}
                    items={items}
-                   title={showGroup ? group : undefined} />;
+                   title={showGroup ? group : undefined}
+                   subtitleRender={subtitleRender}
+               />;
         })
     }
 
@@ -308,6 +311,7 @@ CollectionItems.propTypes = {
     title: PropTypes.string,
     footer: PropTypes.string,
     showGroup: PropTypes.bool,
+    subtitleRender: PropTypes.func,
 };
 
 /* istanbul ignore next */
@@ -325,6 +329,8 @@ CollectionItems.defaultProps = {
     title: undefined,
     footer: undefined,
     showGroup: true,
+    subtitleRender: () => {
+    },
 };
 
 export default CollectionItems;

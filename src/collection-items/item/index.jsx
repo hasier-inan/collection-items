@@ -47,6 +47,7 @@ const Item = (props) => {
         className,
         title,
         width,
+        subtitleRender,
     } = props;
 
     return (
@@ -54,6 +55,7 @@ const Item = (props) => {
             {renderImage()}
             <div title={title} className={'item__title ellipsify'}>{title}</div>
             {renderSubtitle()}
+            {subtitleRender()}
         </div>
     );
 };
@@ -67,6 +69,7 @@ Item.propTypes = {
     "height": PropTypes.number,
     "lazyLoad": PropTypes.bool,
     "onClick": PropTypes.func,
+    "subtitleRender": PropTypes.func,
 };
 
 /* istanbul ignore next */
@@ -78,6 +81,8 @@ Item.defaultProps = {
     "height": 150,
     "lazyLoad": true,
     "onClick": () => {
+    },
+    "subtitleRender": () => {
     },
 };
 
