@@ -85,21 +85,6 @@ var FilterPanel = /*#__PURE__*/function (_React$Component) {
       onFilterSelect(filters);
     }
   }, {
-    key: "calculateByOptionsLength",
-    value: function calculateByOptionsLength(options) {
-      var minWidth = 64,
-          maxWidth = 250;
-      var width = 0;
-      options.forEach(function (option) {
-        var currentWidth = 8 * option.length + minWidth;
-
-        if (currentWidth > width) {
-          width = maxWidth < currentWidth ? maxWidth : currentWidth;
-        }
-      });
-      return width;
-    }
-  }, {
     key: "renderSelects",
     value: function renderSelects() {
       var _this2 = this;
@@ -110,9 +95,6 @@ var FilterPanel = /*#__PURE__*/function (_React$Component) {
             label = filters[filterKey].label;
         return /*#__PURE__*/_react["default"].createElement("div", {
           key: index,
-          style: {
-            width: "".concat(_this2.calculateByOptionsLength(options), "px")
-          },
           className: "item-filter__select item-filter--".concat(filterKey)
         }, /*#__PURE__*/_react["default"].createElement("label", null, label), /*#__PURE__*/_react["default"].createElement(_reactSelect["default"], {
           isMulti: true,
