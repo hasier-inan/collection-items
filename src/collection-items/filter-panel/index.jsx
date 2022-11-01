@@ -46,19 +46,6 @@ class FilterPanel extends React.Component {
         onFilterSelect(filters);
     }
 
-    calculateByOptionsLength(options) {
-        const minWidth = 64, maxWidth = 250;
-        let width = 0;
-
-        options.forEach((option) => {
-            let currentWidth = 8 * option.length + minWidth;
-            if (currentWidth > width) {
-                width = maxWidth < currentWidth ? maxWidth : currentWidth;
-            }
-        });
-        return width;
-    }
-
     renderSelects() {
         const {
             filters
@@ -69,7 +56,6 @@ class FilterPanel extends React.Component {
                 label = filters[filterKey].label;
             return (
                 <div key={index}
-                     style={{width: `${this.calculateByOptionsLength(options)}px`}}
                      className={`item-filter__select item-filter--${filterKey}`}>
                     <label>
                         {label}
