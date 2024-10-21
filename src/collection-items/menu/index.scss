@@ -9,9 +9,14 @@ $menu-background-color: rgba(120, 120, 120, 1);
     color: $menu-primary-color;
     cursor: pointer;
     font-size: 20px;
+    margin-left: 1em;
 
     &:focus {
         outline: none;
+    }
+
+    &.children {
+        margin-left: 2em;
     }
 
     &:hover, &.selected {

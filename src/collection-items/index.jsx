@@ -44,6 +44,7 @@ class CollectionItems extends React.Component {
                 id: categoryId,
                 selected: selectedId && selectedId === categoryId,
                 title: category.title,
+                parent: category.parent,
                 onSelect: () => {
                     onCategorySelect && onCategorySelect(categoryId);
 
@@ -294,6 +295,7 @@ CollectionItems.propTypes = {
     categories: PropTypes.arrayOf(
         PropTypes.shape({
             'title': PropTypes.string.isRequired,
+            'parent': PropTypes.any,
             'id': PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         })
     ),

@@ -50,10 +50,12 @@ const categories = [
     {
         'id': 5,
         'title': 'category2',
+        'parent': 1,
     },
     {
         'id': 6,
         'title': 'category3',
+        'parent': 1,
     },
 ];
 
