@@ -71,6 +71,16 @@ class CollectionItems extends React.Component {
         }
     }
 
+    childrenItems(category) {
+        const {
+                items,
+            categories
+            } = this.props,
+            childrenKeys = categories.filter(c => c.parent === category).map(c=>c.id);
+
+        return childrenKeys.flatMap(k=> items[k]);
+    }
+
     retrieveItems() {
         const {
                 selectedCategory,
@@ -89,7 +99,7 @@ class CollectionItems extends React.Component {
                 return JSON.stringify(item).toUpperCase().includes(searchText.toUpperCase());
             });
         } else {
-            updatedItems = displayedCategory ? items[displayedCategory] : this.retrieveFilteredItems();
+            updatedItems = displayedCategory ? [...items[displayedCategory], ...this.childrenItems(selectedCategory)] : this.retrieveFilteredItems();
         }
         return this.filterItems(updatedItems);
     }

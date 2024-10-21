@@ -3,14 +3,7 @@ import ReactDOM from "react-dom";
 import CollectionItems from "../src/collection-items";
 
 const items = {
-    1: [{
-        title: "American Made Music to Strip By and Educated Horse compilation large title",
-        subtitle: "A large subtitle with many things to say but nothing clear ellipsis should work as expected in this case",
-        subtitle2: '**',
-        image: "https://img.discogs.com/i3O2NPFVVU0unDFHvrAoV3KfMAU=/fit-in/500x500/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-12641858-1539175125-1540.jpeg.jpg",
-        group: "one",
-        width: 50,
-    }],
+    1: [],
     5: [{
         title: "Hellbilly Deluxe",
         subtitle: "Nothing",
