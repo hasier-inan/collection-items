@@ -96,6 +96,7 @@ var CollectionItems = /*#__PURE__*/function (_React$Component) {
           id: categoryId,
           selected: selectedId && selectedId === categoryId,
           title: category.title,
+          parent: category.parent,
           onSelect: function onSelect() {
             onCategorySelect && onCategorySelect(categoryId);
 
@@ -349,6 +350,7 @@ var CollectionItems = /*#__PURE__*/function (_React$Component) {
 CollectionItems.propTypes = {
   categories: _propTypes["default"].arrayOf(_propTypes["default"].shape({
     'title': _propTypes["default"].string.isRequired,
+    'parent': _propTypes["default"].any,
     'id': _propTypes["default"].oneOfType([_propTypes["default"].number, _propTypes["default"].string])
   })),
   fixedWidth: _propTypes["default"].number,

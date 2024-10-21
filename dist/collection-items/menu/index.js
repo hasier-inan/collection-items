@@ -19,6 +19,18 @@ var _reactFontawesome = require("@fortawesome/react-fontawesome");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -60,12 +72,45 @@ var Menu = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(Menu, [{
+    key: "sortByParents",
+    value: function sortByParents(list) {
+      var parents = list.filter(function (item) {
+        return !(item !== null && item !== void 0 && item.parent);
+      });
+      var items = [];
+      parents.forEach(function (parent) {
+        items.push(parent);
+        var children = list.filter(function (list) {
+          return (list === null || list === void 0 ? void 0 : list.parent) === parent.id;
+        });
+
+        if (children) {
+          items.push.apply(items, _toConsumableArray(children));
+        }
+      });
+      return items;
+    }
+  }, {
     key: "getItems",
     value: function getItems() {
       var _this2 = this;
 
       var items = this.props.items;
-      return items.map(function (value, index) {
+      return this.sortByParents(items).map(function (value, index) {
+        var isSelected = '',
+            isChildren = '',
+            icon = items.filter(function (v) {
+          return v.parent === value.id;
+        }).length ? _freeSolidSvgIcons.faChevronCircleDown : _freeSolidSvgIcons.faChevronCircleRight;
+
+        if (value.parent) {
+          isChildren = 'children';
+        }
+
+        if (value.selected) {
+          isSelected = 'selected';
+        }
+
         return /*#__PURE__*/React.createElement("a", {
           key: index,
           onClick: function onClick() {
@@ -75,9 +120,9 @@ var Menu = /*#__PURE__*/function (_React$Component) {
               menuOpen: false
             });
           },
-          className: "menu-item ml-4 mt-2 ".concat(value.selected ? 'selected' : '')
+          className: "menu-item mt-2 ".concat(isSelected, " ").concat(isChildren)
         }, /*#__PURE__*/React.createElement(_reactFontawesome.FontAwesomeIcon, {
-          icon: _freeSolidSvgIcons.faChevronCircleRight,
+          icon: icon,
           className: 'menu-item--bullet',
           size: "xs"
         }), value.title);
@@ -109,6 +154,7 @@ Menu.propTypes = {
     id: _propTypes["default"].oneOfType([_propTypes["default"].number, _propTypes["default"].string]).isRequired,
     selected: _propTypes["default"].bool,
     title: _propTypes["default"].string.isRequired,
+    parent: _propTypes["default"].any,
     onSelect: _propTypes["default"].func
   })),
   isOpen: _propTypes["default"].bool.isRequired
