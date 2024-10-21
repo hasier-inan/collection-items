@@ -99,7 +99,7 @@ class CollectionItems extends React.Component {
                 return JSON.stringify(item).toUpperCase().includes(searchText.toUpperCase());
             });
         } else {
-            updatedItems = displayedCategory ? [...items[displayedCategory], ...this.childrenItems(selectedCategory)] : this.retrieveFilteredItems();
+            updatedItems = displayedCategory ? [...items[displayedCategory], ...this.childrenItems(displayedCategory)] : this.retrieveFilteredItems();
         }
         return this.filterItems(updatedItems);
     }

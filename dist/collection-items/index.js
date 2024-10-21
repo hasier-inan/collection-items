@@ -43,6 +43,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -123,14 +135,29 @@ var CollectionItems = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
+    key: "childrenItems",
+    value: function childrenItems(category) {
+      var _this$props2 = this.props,
+          items = _this$props2.items,
+          categories = _this$props2.categories,
+          childrenKeys = categories.filter(function (c) {
+        return c.parent === category;
+      }).map(function (c) {
+        return c.id;
+      });
+      return childrenKeys.flatMap(function (k) {
+        return items[k];
+      });
+    }
+  }, {
     key: "retrieveItems",
     value: function retrieveItems() {
       var _this$state = this.state,
           selectedCategory = _this$state.selectedCategory,
           searchText = _this$state.searchText,
-          _this$props2 = this.props,
-          items = _this$props2.items,
-          defaultCategory = _this$props2.defaultCategory,
+          _this$props3 = this.props,
+          items = _this$props3.items,
+          defaultCategory = _this$props3.defaultCategory,
           displayedCategory = selectedCategory || defaultCategory;
       var updatedItems;
 
@@ -140,7 +167,7 @@ var CollectionItems = /*#__PURE__*/function (_React$Component) {
           return JSON.stringify(item).toUpperCase().includes(searchText.toUpperCase());
         });
       } else {
-        updatedItems = displayedCategory ? items[displayedCategory] : this.retrieveFilteredItems();
+        updatedItems = displayedCategory ? [].concat(_toConsumableArray(items[displayedCategory]), _toConsumableArray(this.childrenItems(selectedCategory))) : this.retrieveFilteredItems();
       }
 
       return this.filterItems(updatedItems);
@@ -206,10 +233,10 @@ var CollectionItems = /*#__PURE__*/function (_React$Component) {
     value: function renderItemContainers() {
       var _this3 = this;
 
-      var _this$props3 = this.props,
-          groupBy = _this$props3.groupBy,
-          showGroup = _this$props3.showGroup,
-          subtitleRender = _this$props3.subtitleRender,
+      var _this$props4 = this.props,
+          groupBy = _this$props4.groupBy,
+          showGroup = _this$props4.showGroup,
+          subtitleRender = _this$props4.subtitleRender,
           filteredItems = this.retrieveItems();
 
       if (!groupBy) {
